@@ -89,7 +89,7 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             userToken = dataSnapshot.getValue(String.class);
-                            Toast.makeText(LogHistoryDetailsActivity.this, userToken, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(LogHistoryDetailsActivity.this, userToken, Toast.LENGTH_SHORT).show();
                             sendNotifications(userToken, title.getText().toString().trim(), message.getText().toString().trim());
                         }
 
@@ -163,9 +163,9 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().success != 1) {
-                        Toast.makeText(LogHistoryDetailsActivity.this, "Failed ", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LogHistoryDetailsActivity.this, "Failed! Try Again", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(LogHistoryDetailsActivity.this, "Successful ", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(LogHistoryDetailsActivity.this, "Successful ", Toast.LENGTH_LONG).show();
                     }
                 }
             }

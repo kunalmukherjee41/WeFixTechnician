@@ -1,5 +1,9 @@
 package com.example.wefixtechnician;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,15 +12,23 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
-import android.os.Bundle;
-
+import com.example.wefixtechnician.Api.RetrofitClient;
 import com.example.wefixtechnician.fragments.AllLogFragment;
 import com.example.wefixtechnician.fragments.CallLogFragment;
+import com.example.wefixtechnician.sendNotification.Token;
 import com.example.wefixtechnician.storage.SharedPrefManager;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +54,27 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
+//        Toast.makeText(MainActivity.this, FirebaseAuth.getInstance().getUid(), Toast.LENGTH_SHORT).show();
+
+
+        UpdateToken();
+    }
+
+    public void UpdateToken() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String refreshToken = FirebaseInstanceId.getInstance().getToken();
+        Token token = new Token(refreshToken);
+//        HashMap<String, String> hashMap = new HashMap<>();
+//        hashMap.put("token", refreshToken);
+//        hashMap.put("email", SharedPrefManager.getInstance(this).getTechnician().getUsernmae());
+        FirebaseDatabase.getInstance().getReference("Tokens").child(firebaseUser.getUid()).setValue(token)
+                .addOnCompleteListener(
+                        task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(MainActivity.this, "dsc", Toast.LENGTH_SHORT);
+                            }
+                        }
+                );
     }
 
     static class ViewPagerAdapter extends FragmentPagerAdapter {

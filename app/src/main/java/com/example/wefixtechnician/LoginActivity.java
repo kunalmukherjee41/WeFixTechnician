@@ -16,9 +16,15 @@ import android.widget.Toast;
 import com.example.wefixtechnician.Api.RetrofitClient;
 import com.example.wefixtechnician.model.TechnicianResponse;
 import com.example.wefixtechnician.storage.SharedPrefManager;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.Objects;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     TextView forgotPassword;
     ProgressDialog progressBar;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,13 +94,13 @@ public class LoginActivity extends AppCompatActivity {
                             assert technicianResponse != null;
                             SharedPrefManager.getInstance(LoginActivity.this).saveTechnician(technicianResponse.getTechnician());
 //                            Toast.makeText(LoginActivity.this, technicianResponse.getTechnician().getTbl_technician_id(), Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            firebaseLogin(txt_email, txt_password);
                         }
                         login.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.custom_btn2));
                         email.setText("");
                         password.setText("");
                         login.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.custom_btn));
-                        progressBar.dismiss();
                     }
 
                     @Override
@@ -101,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                         login.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.custom_btn));
                         password.setText("");
+                        progressBar.dismiss();
                     }
                 }
         );
@@ -114,6 +122,41 @@ public class LoginActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
+    }
+
+    private void firebaseLogin(String txt_email, String txt_password) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.createUserWithEmailAndPassword(txt_email, txt_password)
+                .addOnCompleteListener(
+                        task -> {
+                            if (task.isSuccessful()) {
+                                FirebaseUser firebaseUser = auth.getCurrentUser();
+                                assert firebaseUser != null;
+                                userID = firebaseUser.getUid();
+
+                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userID);
+
+                                HashMap<String, String> hashMap = new HashMap<>();
+                                hashMap.put("email", txt_email);
+                                hashMap.put("id", userID);
+                                reference.setValue(hashMap).addOnCompleteListener(task1 -> {
+                                    if (task1.isSuccessful()) {
+                                        progressBar.dismiss();
+                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    }
+                                });
+                            } else {
+                                auth.signInWithEmailAndPassword(txt_email, txt_password)
+                                        .addOnCompleteListener(
+                                                task12 -> {
+                                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                                    progressBar.dismiss();
+                                                }
+                                        );
+                            }
+                        }
+                );
+
     }
 
 }

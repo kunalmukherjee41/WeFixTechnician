@@ -4,6 +4,7 @@ import com.example.wefixtechnician.model.Category1Response;
 import com.example.wefixtechnician.model.LogResponse;
 import com.example.wefixtechnician.model.TechnicianResponse;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -32,6 +33,13 @@ public interface Api {
     Call<Category1Response> getCategoryByID(
             @Path("tbl_category_id") int tbl_category_id,
             @Field("app") String app
+    );
+
+    @FormUrlEncoded
+    @PUT("/updatetechnician")
+    Call<ResponseBody> updateFirebaseID(
+            @Field("firebaseID") String firebaseID,
+            @Field("username") String username
     );
 
 }

@@ -50,7 +50,6 @@ public class CallLogFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         getLog();
-
     }
 
     public void getLog() {

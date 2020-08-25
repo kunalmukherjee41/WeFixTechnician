@@ -1,18 +1,35 @@
 package com.example.wefixtechnician;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.wefixtechnician.Api.RetrofitClient;
 import com.example.wefixtechnician.model.Category;
 import com.example.wefixtechnician.model.Category1Response;
 import com.example.wefixtechnician.model.Logs;
+import com.example.wefixtechnician.sendNotification.Client;
+import com.example.wefixtechnician.sendNotification.Data;
+import com.example.wefixtechnician.sendNotification.MyResponse;
+import com.example.wefixtechnician.sendNotification.NotificationSender;
+import com.example.wefixtechnician.storage.SharedPrefManager;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,11 +37,17 @@ import retrofit2.Response;
 
 public class LogHistoryDetailsActivity extends AppCompatActivity {
 
+    private static final String TOPIC = "MyTOPIC";
     TextView date, log_type, name;
     TextView contact, address, category;
     TextView company, amount, status;
     Logs logs;
     ImageView image1;
+
+    EditText title, message;
+    Button send;
+    private String userToken;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +73,43 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
         company = findViewById(R.id.company);
         amount = findViewById(R.id.amount);
         status = findViewById(R.id.status);
+
+        title = findViewById(R.id.title);
+        message = findViewById(R.id.message);
+        send = findViewById(R.id.send);
+
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
+
+        userID = Objects.requireNonNull(FirebaseAuth.getInstance().getUid());
+//        userID = SharedPrefManager.getInstance(this).getTechnician().getFirebase_id();
+
+        send.setOnClickListener(
+                v -> {
+                    FirebaseDatabase.getInstance().getReference("Tokens").child(userID).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            userToken = dataSnapshot.getValue(String.class);
+                            Toast.makeText(LogHistoryDetailsActivity.this, userToken, Toast.LENGTH_SHORT).show();
+                            sendNotifications(userToken, title.getText().toString().trim(), message.getText().toString().trim());
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+//                    FirebaseInstanceId.getInstance().getInstanceId()
+//                            .addOnCompleteListener(
+//                                    task -> {
+//                                        if(task.isSuccessful()){
+//                                            String token = Objects.requireNonNull(task.getResult()).getToken();
+//                                            sendNotifications(token, title.getText().toString().trim(), message.getText().toString().trim());
+//                                        }
+//                                    }
+//                            );
+                }
+        );
 
         getCategory(logs.getRefCatId());
     }
@@ -88,6 +148,33 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    public void sendNotifications(String userToken, String title, String message) {
+        Data data = new Data(title, message);
+        NotificationSender sender = new NotificationSender(data, userToken);
+        Call<MyResponse> call = Client
+                .getInstance()
+                .getApiService()
+                .sendNotification(sender);
+        call.enqueue(new Callback<MyResponse>() {
+            @Override
+            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    if (response.body().success != 1) {
+                        Toast.makeText(LogHistoryDetailsActivity.this, "Failed ", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(LogHistoryDetailsActivity.this, "Successful ", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MyResponse> call, Throwable t) {
+                Toast.makeText(LogHistoryDetailsActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

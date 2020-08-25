@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "910275992639",
+    "firebase_url": "https://wefixtechnician.firebaseio.com",
+    "project_id": "wefixtechnician",
+    "storage_bucket": "wefixtechnician.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910275992639:android:74a1eb3f56f022093d2c8a",
+        "android_client_info": {
+          "package_name": "com.example.wefixtechnician"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "910275992639-u6gup1rd3jgamp2mq879piu0o7lk8jsd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD-wCg-01LWIwDaG_uFJwq4O52Y3bNoe4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "910275992639-u6gup1rd3jgamp2mq879piu0o7lk8jsd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

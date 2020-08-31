@@ -2,6 +2,7 @@ package com.example.wefixtechnician;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        viewPagerAdapter.addFragment(new CallLogFragment(), "Today's Call Logs");
+        viewPagerAdapter.addFragment(new CallLogFragment(), "Open Call Logs");
         viewPagerAdapter.addFragment(new AllLogFragment(), "All Call Log");
 //        viewPagerAdapter.addFragment(new CancelledLogFragment(), "Cancelled Log");
 
@@ -56,6 +57,36 @@ public class MainActivity extends AppCompatActivity {
 
 //        Toast.makeText(MainActivity.this, FirebaseAuth.getInstance().getUid(), Toast.LENGTH_SHORT).show();
 
+        String firebaseID = FirebaseAuth.getInstance().getUid();
+        String username = SharedPrefManager.getInstance(this).getTechnician().getUsernmae();
+        Toast.makeText(MainActivity.this, username, Toast.LENGTH_SHORT).show();
+
+        Call<ResponseBody> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .updateFirebaseID(firebaseID, username);
+
+        call.enqueue(
+                new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            if (!SharedPrefManager.getInstance(MainActivity.this).isLoggedFirebase()) {
+                                SharedPrefManager.getInstance(MainActivity.this).saveFirebaseId(1);
+                                Toast.makeText(MainActivity.this, firebaseID, Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+//                            Log.d("MainActivity123", "Field");
+//                            Toast.makeText(MainActivity.this, "firebaseID", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
 
         UpdateToken();
     }

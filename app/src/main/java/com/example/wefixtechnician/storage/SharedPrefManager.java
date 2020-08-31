@@ -24,6 +24,19 @@ public class SharedPrefManager {
         return mInstance;
     }
 
+    public void saveFirebaseId(int firebase) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt("ID", firebase);
+    }
+
+    public boolean isLoggedFirebase() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+        return sharedPreferences.getInt("ID", -1) != -1;
+    }
+
     public void saveTechnician(Technician technician) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

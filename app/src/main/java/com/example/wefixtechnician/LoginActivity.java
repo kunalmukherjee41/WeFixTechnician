@@ -2,6 +2,7 @@ package com.example.wefixtechnician;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -54,22 +55,22 @@ public class LoginActivity extends AppCompatActivity {
                     progressBar.setContentView(R.layout.progress_dialog);
                     Objects.requireNonNull(progressBar.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
 
-                    login.setBackground(ContextCompat.getDrawable(this, R.drawable.custom_btn2));
+                    login.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_btn2, null));
 
                     String txt_email = email.getText().toString();
                     String txt_password = password.getText().toString();
 
                     if (TextUtils.isEmpty(txt_email)) {
                         Toast.makeText(LoginActivity.this, "Email required!", Toast.LENGTH_SHORT).show();
-                        login.setBackground(getResources().getDrawable(R.drawable.custom_btn));
+                        login.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_btn, null));
                         progressBar.dismiss();
                     } else if (!Patterns.EMAIL_ADDRESS.matcher(txt_email).matches()) {
                         Toast.makeText(LoginActivity.this, "Enter a Valid Email Address!", Toast.LENGTH_SHORT).show();
-                        login.setBackground(ContextCompat.getDrawable(this, R.drawable.custom_btn));
+                        login.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_btn, null));
                         progressBar.dismiss();
                     } else if (TextUtils.isEmpty(txt_password)) {
                         Toast.makeText(LoginActivity.this, "Password Missing!", Toast.LENGTH_SHORT).show();
-                        login.setBackground(ContextCompat.getDrawable(this, R.drawable.custom_btn));
+                        login.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_btn, null));
                         progressBar.dismiss();
                     } else {
                         userlogin(txt_email, txt_password);
@@ -93,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                             TechnicianResponse technicianResponse = response.body();
                             assert technicianResponse != null;
                             SharedPrefManager.getInstance(LoginActivity.this).saveTechnician(technicianResponse.getTechnician());
-//                            Toast.makeText(LoginActivity.this, technicianResponse.getTechnician().getTbl_technician_id(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(LoginActivity.this, technicianResponse.getTechnician().getUsernmae() + "fdv", Toast.LENGTH_SHORT).show();
 //                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             firebaseLogin(txt_email, txt_password);
                         }
@@ -106,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<TechnicianResponse> call, Throwable t) {
                         Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                        login.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.custom_btn));
+                        login.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_btn, null));
                         password.setText("");
                         progressBar.dismiss();
                     }

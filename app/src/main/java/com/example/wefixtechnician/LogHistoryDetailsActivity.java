@@ -95,7 +95,6 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
                         }
                     });
 
@@ -164,8 +163,6 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
                     assert response.body() != null;
                     if (response.body().success != 1) {
                         Toast.makeText(LogHistoryDetailsActivity.this, "Failed! Try Again", Toast.LENGTH_LONG).show();
-                    } else {
-//                        Toast.makeText(LogHistoryDetailsActivity.this, "Successful ", Toast.LENGTH_LONG).show();
                     }
                 }
             }

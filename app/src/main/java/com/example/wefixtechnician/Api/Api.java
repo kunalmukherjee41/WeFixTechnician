@@ -36,7 +36,7 @@ public interface Api {
     );
 
     @FormUrlEncoded
-    @PUT("/updatetechnician")
+    @PUT("updatetechnician")
     Call<ResponseBody> updateFirebaseID(
             @Field("firebaseID") String firebaseID,
             @Field("username") String username

@@ -3,6 +3,7 @@ package com.example.wefixtechnician.Api;
 import com.example.wefixtechnician.model.Category1Response;
 import com.example.wefixtechnician.model.LogResponse;
 import com.example.wefixtechnician.model.TechnicianResponse;
+import com.example.wefixtechnician.model.UserResponse;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -33,6 +34,12 @@ public interface Api {
     Call<Category1Response> getCategoryByID(
             @Path("tbl_category_id") int tbl_category_id,
             @Field("app") String app
+    );
+
+    @FormUrlEncoded
+    @PUT("getuserfirebaseid")
+    Call<UserResponse> getFirebaseId(
+            @Field("username") String username
     );
 
     @FormUrlEncoded

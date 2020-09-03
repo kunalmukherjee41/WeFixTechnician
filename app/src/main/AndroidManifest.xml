@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".LogHistoryDetailsActivity" />
+        <activity android:name=".LogHistoryDetailsActivity"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".StartActivity">

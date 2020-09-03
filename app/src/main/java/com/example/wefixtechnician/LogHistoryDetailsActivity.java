@@ -2,6 +2,7 @@ package com.example.wefixtechnician;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import com.example.wefixtechnician.Api.RetrofitClient;
 import com.example.wefixtechnician.model.Category;
 import com.example.wefixtechnician.model.Category1Response;
 import com.example.wefixtechnician.model.Logs;
+import com.example.wefixtechnician.model.UserResponse;
 import com.example.wefixtechnician.sendNotification.Client;
 import com.example.wefixtechnician.sendNotification.Data;
 import com.example.wefixtechnician.sendNotification.MyResponse;
@@ -46,7 +48,7 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
 
     EditText title, message;
     Button send;
-    private String userToken;
+    private String userToken = null;
     private String userID;
 
     @Override
@@ -54,14 +56,16 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_history_details);
 
+        Intent i = getIntent();
+        logs = (Logs) i.getSerializableExtra("logs");
+
+//        getUserToken(logs.getClientEmail());
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Logs Details");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Intent i = getIntent();
-
-        logs = (Logs) i.getSerializableExtra("logs");
 
         date = findViewById(R.id.date);
         log_type = findViewById(R.id.log_type);
@@ -81,36 +85,59 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
 
         userID = Objects.requireNonNull(FirebaseAuth.getInstance().getUid());
-//        userID = SharedPrefManager.getInstance(this).getTechnician().getFirebase_id();
 
         send.setOnClickListener(
                 v -> {
-                    FirebaseDatabase.getInstance().getReference("Tokens").child(userID).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            userToken = dataSnapshot.getValue(String.class);
-//                            Toast.makeText(LogHistoryDetailsActivity.this, userToken, Toast.LENGTH_SHORT).show();
-                            sendNotifications(userToken, title.getText().toString().trim(), message.getText().toString().trim());
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                        }
-                    });
-
-//                    FirebaseInstanceId.getInstance().getInstanceId()
-//                            .addOnCompleteListener(
-//                                    task -> {
-//                                        if(task.isSuccessful()){
-//                                            String token = Objects.requireNonNull(task.getResult()).getToken();
-//                                            sendNotifications(token, title.getText().toString().trim(), message.getText().toString().trim());
-//                                        }
-//                                    }
-//                            );
+//                    sendNotifications(userToken, title.getText().toString().trim(), message.getText().toString().trim());
+                    getUserToken(logs.getClientEmail());
                 }
         );
 
         getCategory(logs.getRefCatId());
+    }
+
+    private void getUserToken(String clientEmail) {
+
+        Call<UserResponse> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .getFirebaseId(clientEmail);
+
+        call.enqueue(
+                new Callback<UserResponse>() {
+                    @Override
+                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                        if (response.isSuccessful()) {
+                            assert response.body() != null;
+                            userID = response.body().getUser().getId();
+                            if (userID != null) {
+//                                Toast.makeText(LogHistoryDetailsActivity.this, userID, Toast.LENGTH_SHORT).show();
+                                FirebaseDatabase.getInstance().getReference("Tokens").child(userID).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        userToken = dataSnapshot.getValue(String.class);
+                                        sendNotifications(userToken, title.getText().toString().trim(), message.getText().toString().trim());
+//                                        Toast.makeText(LogHistoryDetailsActivity.this, userToken, Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(LogHistoryDetailsActivity.this, "Try Again", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserResponse> call, Throwable t) {
+
+                    }
+                }
+        );
     }
 
     private void getCategory(int refCatId) {
@@ -163,6 +190,8 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
                     assert response.body() != null;
                     if (response.body().success != 1) {
                         Toast.makeText(LogHistoryDetailsActivity.this, "Failed! Try Again", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(LogHistoryDetailsActivity.this, "Successfully send", Toast.LENGTH_LONG).show();
                     }
                 }
             }

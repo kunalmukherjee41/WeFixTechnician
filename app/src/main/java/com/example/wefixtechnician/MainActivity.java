@@ -3,6 +3,7 @@ package com.example.wefixtechnician;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -40,8 +41,11 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("All Logs");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        String txt_name = "Welcome " + SharedPrefManager.getInstance(this).getTechnician().getTechnician_name();
+        TextView name = findViewById(R.id.name);
+        name.setText(txt_name);
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.view_pager);
@@ -59,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         String firebaseID = FirebaseAuth.getInstance().getUid();
         String username = SharedPrefManager.getInstance(this).getTechnician().getUsernmae();
-        Toast.makeText(MainActivity.this, username, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this, username, Toast.LENGTH_SHORT).show();
 
         Call<ResponseBody> call = RetrofitClient
                 .getInstance()
@@ -73,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             if (!SharedPrefManager.getInstance(MainActivity.this).isLoggedFirebase()) {
                                 SharedPrefManager.getInstance(MainActivity.this).saveFirebaseId(1);
-                                Toast.makeText(MainActivity.this, firebaseID, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(MainActivity.this, firebaseID, Toast.LENGTH_SHORT).show();
                             }
                         } else {
 //                            Log.d("MainActivity123", "Field");
@@ -98,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
 //        HashMap<String, String> hashMap = new HashMap<>();
 //        hashMap.put("token", refreshToken);
 //        hashMap.put("email", SharedPrefManager.getInstance(this).getTechnician().getUsernmae());
+        assert firebaseUser != null;
         FirebaseDatabase.getInstance().getReference("Tokens").child(firebaseUser.getUid()).setValue(token)
                 .addOnCompleteListener(
                         task -> {

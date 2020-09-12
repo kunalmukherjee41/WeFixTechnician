@@ -1,8 +1,7 @@
-package com.example.wefixtechnician;
+package com.example.wefixtechnician.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -18,18 +17,12 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.wefixtechnician.Api.RetrofitClient;
-import com.example.wefixtechnician.fragments.AllLogFragment;
-import com.example.wefixtechnician.fragments.CallLogFragment;
+import com.example.wefixtechnician.R;
 import com.example.wefixtechnician.fragments.LogFragment;
 import com.example.wefixtechnician.fragments.PaymentFragment;
-import com.example.wefixtechnician.fragments.WarrantyLogFragment;
-import com.example.wefixtechnician.sendNotification.Token;
 import com.example.wefixtechnician.storage.SharedPrefManager;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.Objects;

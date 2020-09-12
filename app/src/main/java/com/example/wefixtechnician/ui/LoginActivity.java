@@ -1,4 +1,4 @@
-package com.example.wefixtechnician;
+package com.example.wefixtechnician.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wefixtechnician.Api.RetrofitClient;
+import com.example.wefixtechnician.R;
 import com.example.wefixtechnician.model.Technician;
 import com.example.wefixtechnician.model.TechnicianResponse;
 import com.example.wefixtechnician.storage.SharedPrefManager;
@@ -31,7 +32,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Objects;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wefixtechnician.Api.RetrofitClient;
-import com.example.wefixtechnician.LogHistoryDetailsActivity;
+import com.example.wefixtechnician.ui.LogHistoryDetailsActivity;
 import com.example.wefixtechnician.R;
 import com.example.wefixtechnician.model.Category;
 import com.example.wefixtechnician.model.Category1Response;

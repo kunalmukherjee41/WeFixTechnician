@@ -1,4 +1,4 @@
-package com.example.wefixtechnician;
+package com.example.wefixtechnician.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.wefixtechnician.Api.RetrofitClient;
+import com.example.wefixtechnician.R;
 import com.example.wefixtechnician.model.My1Response;
-import com.example.wefixtechnician.sendNotification.MyResponse;
 import com.example.wefixtechnician.storage.SharedPrefManager;
 
 import retrofit2.Call;

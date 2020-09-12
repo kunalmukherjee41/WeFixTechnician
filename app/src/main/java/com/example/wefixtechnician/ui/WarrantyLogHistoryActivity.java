@@ -1,10 +1,11 @@
-package com.example.wefixtechnician;
+package com.example.wefixtechnician.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.wefixtechnician.R;
 import com.example.wefixtechnician.model.WarrantyLog;
 
 import java.util.Objects;

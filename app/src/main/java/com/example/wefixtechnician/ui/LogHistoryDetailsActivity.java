@@ -1,8 +1,7 @@
-package com.example.wefixtechnician;
+package com.example.wefixtechnician.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.wefixtechnician.Api.RetrofitClient;
+import com.example.wefixtechnician.R;
 import com.example.wefixtechnician.model.Category;
 import com.example.wefixtechnician.model.Category1Response;
 import com.example.wefixtechnician.model.Logs;
@@ -22,16 +22,12 @@ import com.example.wefixtechnician.sendNotification.Client;
 import com.example.wefixtechnician.sendNotification.Data;
 import com.example.wefixtechnician.sendNotification.MyResponse;
 import com.example.wefixtechnician.sendNotification.NotificationSender;
-import com.example.wefixtechnician.storage.SharedPrefManager;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
-
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;

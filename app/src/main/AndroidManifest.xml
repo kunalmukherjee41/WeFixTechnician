@@ -15,16 +15,16 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".WarrantyLogHistoryActivity" />
+        <activity android:name=".ui.WarrantyLogHistoryActivity" />
         <activity
-            android:name=".ChangePasswordActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".ui.ChangePasswordActivity"
+            android:parentActivityName=".ui.MainActivity" />
         <activity
-            android:name=".LogHistoryDetailsActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".StartActivity">
+            android:name=".ui.LogHistoryDetailsActivity"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -11,9 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.wefixtechnician.MainActivity;
+import com.example.wefixtechnician.ui.MainActivity;
 import com.example.wefixtechnician.R;
-import com.example.wefixtechnician.storage.SharedPrefManager;
 import com.google.android.material.tabs.TabLayout;
 
 public class LogFragment extends Fragment {

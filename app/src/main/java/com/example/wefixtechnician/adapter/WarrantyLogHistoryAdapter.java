@@ -2,7 +2,6 @@ package com.example.wefixtechnician.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wefixtechnician.Api.RetrofitClient;
 import com.example.wefixtechnician.R;
-import com.example.wefixtechnician.WarrantyLogHistoryActivity;
+import com.example.wefixtechnician.ui.WarrantyLogHistoryActivity;
 import com.example.wefixtechnician.model.Company;
 import com.example.wefixtechnician.model.Company1Response;
 import com.example.wefixtechnician.model.WarrantyLog;

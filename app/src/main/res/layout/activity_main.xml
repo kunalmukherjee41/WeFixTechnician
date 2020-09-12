@@ -15,14 +15,25 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
+            android:background="#4960E0"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:titleTextColor="#fff">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="20dp"
+                android:contentDescription="Logo"
+                android:src="@drawable/logo" />
 
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -30,7 +41,7 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
+            android:background="#4960E0"
             app:tabIndicatorColor="#fff"
             app:tabSelectedTextColor="#fff"
             app:tabTextColor="#fff" />

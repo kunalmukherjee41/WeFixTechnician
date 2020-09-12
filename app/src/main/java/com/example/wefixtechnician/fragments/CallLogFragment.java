@@ -2,6 +2,7 @@ package com.example.wefixtechnician.fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.wefixtechnician.Api.RetrofitClient;
 import com.example.wefixtechnician.R;
@@ -28,12 +30,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CallLogFragment extends Fragment {
+public class CallLogFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
     private List<Logs> logsList;
 
     ProgressDialog progressBar;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Nullable
     @Override
@@ -45,6 +48,9 @@ public class CallLogFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mSwipeRefreshLayout = view.findViewById(R.id.container);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -54,10 +60,10 @@ public class CallLogFragment extends Fragment {
 
     public void getLog() {
 
-        progressBar = new ProgressDialog(getActivity());
-        progressBar.show();
-        progressBar.setContentView(R.layout.progress_dialog);
-        Objects.requireNonNull(progressBar.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+//        progressBar = new ProgressDialog(getActivity());
+//        progressBar.show();
+//        progressBar.setContentView(R.layout.progress_dialog);
+//        Objects.requireNonNull(progressBar.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
 
         int ref_technician_id = SharedPrefManager.getInstance(getActivity()).getTechnician().getTbl_technician_id();
 
@@ -82,9 +88,9 @@ public class CallLogFragment extends Fragment {
                             }
                             LogHistoryAdapter adapter = new LogHistoryAdapter(getActivity(), logs);
                             recyclerView.setAdapter(adapter);
-                            progressBar.dismiss();
+//                            progressBar.dismiss();
                         } else {
-                            progressBar.dismiss();
+//                            progressBar.dismiss();
                             Toast.makeText(getActivity(), "Something went wrong try Again", Toast.LENGTH_LONG).show();
                         }
                     }
@@ -92,10 +98,21 @@ public class CallLogFragment extends Fragment {
                     @Override
                     public void onFailure(Call<LogResponse> call, Throwable t) {
                         Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
-                        progressBar.dismiss();
+//                        progressBar.dismiss();
 
                     }
                 }
         );
     }
+
+    @Override
+    public void onRefresh() {
+        getLog();
+
+        if (logsList != null) {
+            Toast.makeText(getActivity(), "Refresh", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(() -> mSwipeRefreshLayout.setRefreshing(false), 1000);
+        }
+    }
+
 }

@@ -84,11 +84,10 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
 
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
 
-        userID = Objects.requireNonNull(FirebaseAuth.getInstance().getUid());
+//        userID = Objects.requireNonNull(FirebaseAuth.getInstance().getUid());
 
         send.setOnClickListener(
                 v -> {
-
 //                    sendNotifications(userToken, title.getText().toString().trim(), message.getText().toString().trim());
                     getUserToken(logs.getClientEmail());
                 }
@@ -163,7 +162,7 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
                             amount.setText(String.valueOf(logs.getAmount()));
                             status.setText(logs.getCallLogStatus());
 //                            Glide.with(LogHistoryDetailsActivity.this).load("http://wefix.sitdoxford.org/product/" + cat.getTbl_category_image()).into(image1);
-                            Picasso.get().load("http://wefix.sitdoxford.org/product/" + cat.getTbl_category_image()).into(image1);
+                            Picasso.get().load("https://wefixservice.in/product/" + cat.getTbl_category_image()).into(image1);
                             company.setText(logs.getProductCompany());
                         }
                     }

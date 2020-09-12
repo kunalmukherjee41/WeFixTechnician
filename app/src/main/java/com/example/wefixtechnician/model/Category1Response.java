@@ -3,7 +3,9 @@ package com.example.wefixtechnician.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Category1Response {
+import java.io.Serializable;
+
+public class Category1Response implements Serializable {
 
     @SerializedName("error")
     @Expose

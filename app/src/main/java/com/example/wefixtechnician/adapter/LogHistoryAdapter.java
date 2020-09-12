@@ -74,7 +74,7 @@ public class LogHistoryAdapter extends RecyclerView.Adapter<LogHistoryAdapter.Lo
                             holder.name1.setText(category.getTbl_category_name());
 //                            Toast.makeText(mContext, category.getTbl_category_image(), Toast.LENGTH_LONG).show();
 //                            Glide.with(mContext).load("http://wefix.sitdoxford.org/product/" + category.getTbl_category_image()).into(holder.image);
-                            Picasso.get().load("http://wefix.sitdoxford.org/product/" + category.getTbl_category_image()).into(holder.image);
+                            Picasso.get().load("https://wefixservice/product/" + category.getTbl_category_image()).into(holder.image);
 //                            Glide.with(mContext).load("http://wefix.sitdoxford.org/product/" + category.getTbl_category_image()).into(holder.image);
                         }
                     }

@@ -4,20 +4,20 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.List;
 
-public class LogResponse implements Serializable {
+public class My1Response implements Serializable {
 
     @SerializedName("error")
     @Expose
-    private Boolean error;
-    @SerializedName("log")
-    @Expose
-    private List<Logs> log;
+    Boolean error;
 
-    public LogResponse(Boolean error, List<Logs> log) {
+    @SerializedName("message")
+    @Expose
+    String message;
+
+    public My1Response(Boolean error, String message) {
         this.error = error;
-        this.log = log;
+        this.message = message;
     }
 
     public Boolean getError() {
@@ -28,11 +28,12 @@ public class LogResponse implements Serializable {
         this.error = error;
     }
 
-    public List<Logs> getLog() {
-        return log;
+    public String getMessage() {
+        return message;
     }
 
-    public void setLog(List<Logs> log) {
-        this.log = log;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
+

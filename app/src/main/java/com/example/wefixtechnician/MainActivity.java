@@ -3,9 +3,12 @@ package com.example.wefixtechnician;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,6 +20,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.wefixtechnician.Api.RetrofitClient;
 import com.example.wefixtechnician.fragments.AllLogFragment;
 import com.example.wefixtechnician.fragments.CallLogFragment;
+import com.example.wefixtechnician.fragments.LogFragment;
+import com.example.wefixtechnician.fragments.PaymentFragment;
+import com.example.wefixtechnician.fragments.WarrantyLogFragment;
 import com.example.wefixtechnician.sendNotification.Token;
 import com.example.wefixtechnician.storage.SharedPrefManager;
 import com.google.android.material.tabs.TabLayout;
@@ -26,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -41,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
 
         String txt_name = "Welcome " + SharedPrefManager.getInstance(this).getTechnician().getTechnician_name();
         TextView name = findViewById(R.id.name);
@@ -52,18 +59,15 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        viewPagerAdapter.addFragment(new CallLogFragment(), "Open Call Logs");
-        viewPagerAdapter.addFragment(new AllLogFragment(), "All Call Log");
-//        viewPagerAdapter.addFragment(new CancelledLogFragment(), "Cancelled Log");
+        viewPagerAdapter.addFragment(new LogFragment(), "All Logs");
+        viewPagerAdapter.addFragment(new PaymentFragment(), "Payment");
+        viewPager.setOffscreenPageLimit(2);
 
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
-//        Toast.makeText(MainActivity.this, FirebaseAuth.getInstance().getUid(), Toast.LENGTH_SHORT).show();
-
         String firebaseID = FirebaseAuth.getInstance().getUid();
         String username = SharedPrefManager.getInstance(this).getTechnician().getUsernmae();
-//        Toast.makeText(MainActivity.this, username, Toast.LENGTH_SHORT).show();
 
         Call<ResponseBody> call = RetrofitClient
                 .getInstance()
@@ -79,9 +83,6 @@ public class MainActivity extends AppCompatActivity {
                                 SharedPrefManager.getInstance(MainActivity.this).saveFirebaseId(1);
 //                                Toast.makeText(MainActivity.this, firebaseID, Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-//                            Log.d("MainActivity123", "Field");
-//                            Toast.makeText(MainActivity.this, "firebaseID", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -92,33 +93,14 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        UpdateToken();
     }
 
-    public void UpdateToken() {
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String refreshToken = FirebaseInstanceId.getInstance().getToken();
-        Token token = new Token(refreshToken);
-//        HashMap<String, String> hashMap = new HashMap<>();
-//        hashMap.put("token", refreshToken);
-//        hashMap.put("email", SharedPrefManager.getInstance(this).getTechnician().getUsernmae());
-        assert firebaseUser != null;
-        FirebaseDatabase.getInstance().getReference("Tokens").child(firebaseUser.getUid()).setValue(token)
-                .addOnCompleteListener(
-                        task -> {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(MainActivity.this, "dsc", Toast.LENGTH_SHORT);
-                            }
-                        }
-                );
-    }
-
-    static class ViewPagerAdapter extends FragmentPagerAdapter {
+    public static class ViewPagerAdapter extends FragmentPagerAdapter {
 
         private ArrayList<Fragment> fragments;
         private ArrayList<String> titles;
 
-        ViewPagerAdapter(FragmentManager fm) {
+        public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
             this.fragments = new ArrayList<>();
             this.titles = new ArrayList<>();
@@ -156,5 +138,32 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.logout:
+                SharedPrefManager.getInstance(this).clear();
+                Intent intent2 = new Intent(this, MainActivity.class);
+                intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent2);
+                finish();
+                return true;
+
+            case R.id.change_password:
+                startActivity(new Intent(MainActivity.this, ChangePasswordActivity.class));
+                return true;
+        }
+
+        return false;
+    }
+
 
 }

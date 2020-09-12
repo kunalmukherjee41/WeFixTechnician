@@ -8,15 +8,21 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wefixtechnician.Api.RetrofitClient;
+import com.example.wefixtechnician.model.Technician;
 import com.example.wefixtechnician.model.TechnicianResponse;
 import com.example.wefixtechnician.storage.SharedPrefManager;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -91,12 +97,27 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<TechnicianResponse> call, Response<TechnicianResponse> response) {
                         if (response.isSuccessful()) {
-                            TechnicianResponse technicianResponse = response.body();
-                            assert technicianResponse != null;
-                            SharedPrefManager.getInstance(LoginActivity.this).saveTechnician(technicianResponse.getTechnician());
+//                            TechnicianResponse technicianResponse = response.body();
+//                            assert technicianResponse != null;
+//                            SharedPrefManager.getInstance(LoginActivity.this).saveTechnician(technicianResponse.getTechnician());
 //                            Toast.makeText(LoginActivity.this, technicianResponse.getTechnician().getUsernmae() + "fdv", Toast.LENGTH_SHORT).show();
 //                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            firebaseLogin(txt_email, txt_password);
+                            assert response.body() != null;
+                            if (response.body().getMessage().equals("Login Successful")) {
+                                Technician technician = response.body().getTechnician();
+                                if (technician.getStatus().equals("ACTIVE")) {
+                                    SharedPrefManager.getInstance(LoginActivity.this).saveTechnician(technician);
+//                                    Toast.makeText(LoginActivity.this, technician.getTbl_technician_id() + "lbkjkv", Toast.LENGTH_SHORT).show();
+//                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                    startActivity(intent);
+                                    firebaseLogin(txt_email, txt_password);
+                                } else {
+                                    Snackbar snackBar = Snackbar.make(findViewById(R.id.id), "You Are No Longer in this Company!", Snackbar.LENGTH_LONG);
+                                    snackBar.setAction("Action Message", v -> snackBar.dismiss());
+                                    snackBar.show();
+                                }
+                            }
                         }
                         login.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.custom_btn2));
                         email.setText("");
@@ -157,7 +178,21 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                 );
+    }
 
+    public void ShowHidePass(View view) {
+
+        if (view.getId() == R.id.pass_btn) {
+            if (password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                ((ImageView) (view)).setImageResource(R.drawable.password_hide_asset);
+                //Show Password
+                password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            } else {
+                ((ImageView) (view)).setImageResource(R.drawable.password_visible_asset);
+                //Hide Password
+                password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }
+        }
     }
 
 }

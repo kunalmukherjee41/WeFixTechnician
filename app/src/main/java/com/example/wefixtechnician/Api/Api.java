@@ -1,9 +1,12 @@
 package com.example.wefixtechnician.Api;
 
 import com.example.wefixtechnician.model.Category1Response;
+import com.example.wefixtechnician.model.Company1Response;
 import com.example.wefixtechnician.model.LogResponse;
+import com.example.wefixtechnician.model.My1Response;
 import com.example.wefixtechnician.model.TechnicianResponse;
 import com.example.wefixtechnician.model.UserResponse;
+import com.example.wefixtechnician.model.WarrantyLogResponse;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -47,6 +50,28 @@ public interface Api {
     Call<ResponseBody> updateFirebaseID(
             @Field("firebaseID") String firebaseID,
             @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @PUT("updatetechnicianpassword")
+    Call<My1Response> updatePassword(
+            @Field("currentpassword") String currentpassword,
+            @Field("newpassword") String newpassword,
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @PUT("getcompanybyid/{tbl_company_id}")
+    Call<Company1Response> getCompanyById(
+            @Path("tbl_company_id") int tbl_company_id,
+            @Field("app") String app
+    );
+
+    @FormUrlEncoded
+    @PUT("getwarrantycalllogfortechnician/{technician_id}")
+    Call<WarrantyLogResponse> getWarrantyCallLog(
+            @Path("technician_id") int technician_id,
+            @Field("app") String app
     );
 
 }

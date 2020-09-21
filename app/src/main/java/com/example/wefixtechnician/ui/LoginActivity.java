@@ -117,6 +117,11 @@ public class LoginActivity extends AppCompatActivity {
                                     snackBar.setAction("Action Message", v -> snackBar.dismiss());
                                     snackBar.show();
                                 }
+                            } else {
+                                progressBar.dismiss();
+                                Snackbar snackBar = Snackbar.make(findViewById(R.id.id), response.body().getMessage(), Snackbar.LENGTH_LONG);
+                                snackBar.setAction("Action Message", v -> snackBar.dismiss());
+                                snackBar.show();
                             }
                         }
                         login.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.custom_btn2));

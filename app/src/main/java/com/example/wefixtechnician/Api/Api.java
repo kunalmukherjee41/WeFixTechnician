@@ -4,6 +4,8 @@ import com.example.wefixtechnician.model.Category1Response;
 import com.example.wefixtechnician.model.Company1Response;
 import com.example.wefixtechnician.model.LogResponse;
 import com.example.wefixtechnician.model.My1Response;
+import com.example.wefixtechnician.model.PartsResponse;
+import com.example.wefixtechnician.model.Service1Response;
 import com.example.wefixtechnician.model.TechnicianResponse;
 import com.example.wefixtechnician.model.UserResponse;
 import com.example.wefixtechnician.model.WarrantyLogResponse;
@@ -71,6 +73,40 @@ public interface Api {
     @PUT("getwarrantycalllogfortechnician/{technician_id}")
     Call<WarrantyLogResponse> getWarrantyCallLog(
             @Path("technician_id") int technician_id,
+            @Field("app") String app
+    );
+
+    @FormUrlEncoded
+    @PUT("getservice/{id}")
+    Call<Service1Response> getServiceByID(
+            @Path("id") int id,
+            @Field("app") String app
+    );
+
+    @FormUrlEncoded
+    @PUT("completecalllog/{call_log_id}")
+    Call<ResponseBody> completeCallLog(
+            @Path("call_log_id") int call_log_id,
+            @Field("ref_service_id") int ref_service_id,
+            @Field("call_log_status") String call_log_status,
+            @Field("amount") String amount
+    );
+
+    @FormUrlEncoded
+    @POST("addparts")
+    Call<My1Response> addParts(
+            @Field("ref_log_id") int ref_log_id,
+            @Field("ref_technician_id") int ref_technician_id,
+            @Field("partdes") String partdes,
+            @Field("amount") String amount,
+            @Field("entry_date") String date,
+            @Field("entry_time") String time
+    );
+
+    @FormUrlEncoded
+    @PUT("getparts/{ref_log_id}")
+    Call<PartsResponse> getParts(
+            @Path("ref_log_id") int ref_log_id,
             @Field("app") String app
     );
 

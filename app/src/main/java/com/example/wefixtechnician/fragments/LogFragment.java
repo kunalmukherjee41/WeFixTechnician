@@ -35,8 +35,8 @@ public class LogFragment extends Fragment {
         MainActivity.ViewPagerAdapter viewPagerAdapter = new MainActivity.ViewPagerAdapter(getChildFragmentManager());
 
         viewPagerAdapter.addFragment(new CallLogFragment(), "Open Call Logs");
-        viewPagerAdapter.addFragment(new AllLogFragment(), "All Call Log");
-        viewPagerAdapter.addFragment(new WarrantyLogFragment(), "Warranty Log");
+        viewPagerAdapter.addFragment(new AllLogFragment(), "Close Call Log");
+//        viewPagerAdapter.addFragment(new WarrantyLogFragment(), "Warranty Log");
 
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

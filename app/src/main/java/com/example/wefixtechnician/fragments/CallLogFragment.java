@@ -82,11 +82,14 @@ public class CallLogFragment extends Fragment implements SwipeRefreshLayout.OnRe
 //                            Toast.makeText(getActivity(), "Successful", Toast.LENGTH_LONG).show();
                             List<Logs> logs = new ArrayList<>();
                             for (Logs logs1 : logsList) {
-                                if (!logs1.getCallLogStatus().equals("CANCEL")) {
+                                if (!logs1.getCallLogStatus().equals("CANCEL") && !logs1.getCallLogStatus().equals("CLOSE") && !logs1.getCallLogStatus().equals("REJECT") && !logs1.getCallLogStatus().equals("COMPLETE")) {
                                     logs.add(logs1);
                                 }
                             }
+                            recyclerView.setItemViewCacheSize(logs.size());
                             LogHistoryAdapter adapter = new LogHistoryAdapter(getActivity(), logs);
+                            adapter.setHasStableIds(true);
+                            adapter.notifyDataSetChanged();
                             recyclerView.setAdapter(adapter);
 //                            progressBar.dismiss();
                         } else {

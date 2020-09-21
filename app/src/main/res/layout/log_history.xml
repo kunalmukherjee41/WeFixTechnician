@@ -25,33 +25,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="Log Placed" />
+                    android:text="Log Placed"
+                    android:textColor="#000" />
 
                 <TextView
                     android:id="@+id/date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp" />
+                    android:layout_marginStart="30dp"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
-                    android:text="Log ID# " />
+                    android:text="Log ID# "
+                    android:textColor="#000" />
 
                 <TextView
                     android:id="@+id/id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp" />
-
-                <TextView
-                    android:id="@+id/details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="35dp"
-                    android:text="Details"
-                    android:textColor="@color/colorPrimaryDark" />
+                    android:layout_marginStart="20dp"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

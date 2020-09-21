@@ -18,6 +18,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.wefixtechnician.Api.RetrofitClient;
 import com.example.wefixtechnician.R;
+import com.example.wefixtechnician.fragments.AllLogFragment;
+import com.example.wefixtechnician.fragments.CallLogFragment;
 import com.example.wefixtechnician.fragments.LogFragment;
 import com.example.wefixtechnician.fragments.PaymentFragment;
 import com.example.wefixtechnician.storage.SharedPrefManager;
@@ -52,8 +54,10 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        viewPagerAdapter.addFragment(new LogFragment(), "All Logs");
-        viewPagerAdapter.addFragment(new PaymentFragment(), "Payment");
+//        viewPagerAdapter.addFragment(new LogFragment(), "All Logs");
+//        viewPagerAdapter.addFragment(new PaymentFragment(), "Payment");
+        viewPagerAdapter.addFragment(new CallLogFragment(), "Open Logs");
+        viewPagerAdapter.addFragment(new AllLogFragment(), "Close Logs");
         viewPager.setOffscreenPageLimit(2);
 
         viewPager.setAdapter(viewPagerAdapter);
@@ -144,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.logout:
                 SharedPrefManager.getInstance(this).clear();
-                Intent intent2 = new Intent(this, MainActivity.class);
+                Intent intent2 = new Intent(this, LoginActivity.class);
                 intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent2);
                 finish();
@@ -157,6 +161,5 @@ public class MainActivity extends AppCompatActivity {
 
         return false;
     }
-
 
 }

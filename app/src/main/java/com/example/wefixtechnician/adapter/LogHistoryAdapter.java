@@ -72,10 +72,7 @@ public class LogHistoryAdapter extends RecyclerView.Adapter<LogHistoryAdapter.Lo
                             Category category = response.body().getCategory();
                             holder.name.setText(category.getTbl_category_name());
                             holder.name1.setText(category.getTbl_category_name());
-//                            Toast.makeText(mContext, category.getTbl_category_image(), Toast.LENGTH_LONG).show();
-//                            Glide.with(mContext).load("http://wefix.sitdoxford.org/product/" + category.getTbl_category_image()).into(holder.image);
                             Picasso.get().load("https://wefixservice/product/" + category.getTbl_category_image()).into(holder.image);
-//                            Glide.with(mContext).load("http://wefix.sitdoxford.org/product/" + category.getTbl_category_image()).into(holder.image);
                         }
                     }
 
@@ -96,29 +93,31 @@ public class LogHistoryAdapter extends RecyclerView.Adapter<LogHistoryAdapter.Lo
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public int getItemCount() {
         return logsList.size();
     }
 
     public static class LogViewHolder extends RecyclerView.ViewHolder {
 
-        TextView date, id, details, name;
+        TextView date, id, name;
         ImageView image;
         TextView name1, company, charge;
-        private RelativeLayout layout;
 
         public LogViewHolder(@NonNull View itemView) {
             super(itemView);
 
             date = itemView.findViewById(R.id.date);
             id = itemView.findViewById(R.id.id);
-            details = itemView.findViewById(R.id.details);
             name = itemView.findViewById(R.id.name);
             image = itemView.findViewById(R.id.image);
             name1 = itemView.findViewById(R.id.name1);
             company = itemView.findViewById(R.id.company);
             charge = itemView.findViewById(R.id.charge);
-            layout = itemView.findViewById(R.id.layout);
 
         }
     }

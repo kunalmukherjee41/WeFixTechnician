@@ -83,13 +83,16 @@ public class AllLogFragment extends Fragment implements SwipeRefreshLayout.OnRef
                             assert response.body() != null;
                             logsList = response.body().getLog();
 //                            Toast.makeText(getActivity(), "Successful", Toast.LENGTH_LONG).show();
-//                            List<Logs> logs = new ArrayList<>();
-//                            for (Logs logs1 : logsList) {
-//                                if (!logs1.getCallLogStatus().equals("CANCEL")) {
-//                                    logs.add(logs1);
-//                                }
-//                            }
-                            LogHistoryAdapter adapter = new LogHistoryAdapter(getActivity(), logsList);
+                            List<Logs> logs = new ArrayList<>();
+                            for (Logs logs1 : logsList) {
+                                if (logs1.getCallLogStatus().equals("CANCEL") || logs1.getCallLogStatus().equals("CLOSE") || logs1.getCallLogStatus().equals("REJECT") || logs1.getCallLogStatus().equals("COMPLETE")) {
+                                    logs.add(logs1);
+                                }
+                            }
+                            recyclerView.setItemViewCacheSize(logs.size());
+                            LogHistoryAdapter adapter = new LogHistoryAdapter(getActivity(), logs);
+                            adapter.setHasStableIds(true);
+                            adapter.notifyDataSetChanged();
                             recyclerView.setAdapter(adapter);
 //                            progressBar.dismiss();
                         } else {

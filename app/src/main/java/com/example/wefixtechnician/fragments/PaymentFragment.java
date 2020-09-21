@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.example.wefixtechnician.R;
 
-
 public class PaymentFragment extends Fragment {
 
     @Override

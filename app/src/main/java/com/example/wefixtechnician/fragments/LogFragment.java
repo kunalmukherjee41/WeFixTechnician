@@ -20,7 +20,6 @@ public class LogFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_log, container, false);
     }
 
@@ -36,7 +35,6 @@ public class LogFragment extends Fragment {
 
         viewPagerAdapter.addFragment(new CallLogFragment(), "Open Call Logs");
         viewPagerAdapter.addFragment(new AllLogFragment(), "Close Call Log");
-//        viewPagerAdapter.addFragment(new WarrantyLogFragment(), "Warranty Log");
 
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

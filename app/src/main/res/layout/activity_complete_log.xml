@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            app:title="Tav Invoice"
+            app:title="Tax Invoice"
             app:titleTextColor="#fff" />
 
         <TextView
@@ -25,7 +25,7 @@
             android:layout_below="@id/toolbar"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="Tax Invoice"
+            android:text="@string/tax_invoice"
             android:textColor="#0460e0"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="WeFix"
+                    android:text="@string/wefix"
                     android:textColor="#000"
                     android:textSize="25sp"
                     android:textStyle="bold" />
@@ -76,7 +76,7 @@
                     android:layout_below="@id/f"
                     android:layout_marginTop="10dp"
                     android:gravity="center_horizontal"
-                    android:text="AAHAN COMMRCIAL AND CO."
+                    android:text="@string/aahan_commrcial_and_co"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -87,7 +87,7 @@
                     android:layout_below="@id/a"
                     android:layout_marginTop="8dp"
                     android:gravity="center_horizontal"
-                    android:text="GSTIN/UIN: 19ABMFA5193K1ZU"
+                    android:text="@string/gstin_uin_19abmfa5193k1zu"
                     android:textSize="15sp" />
 
                 <TextView
@@ -97,7 +97,7 @@
                     android:layout_below="@id/b"
                     android:layout_marginTop="8dp"
                     android:gravity="center_horizontal"
-                    android:text="Contact: 8509200714"
+                    android:text="@string/contact_8509200714"
                     android:textSize="15sp" />
 
                 <TextView
@@ -107,7 +107,7 @@
                     android:layout_below="@id/e"
                     android:layout_marginTop="8dp"
                     android:gravity="center_horizontal"
-                    android:text="Email: wefix.aahan@gmail.com"
+                    android:text="@string/email_wefix_aahan_gmail_com"
                     android:textSize="15sp" />
 
                 <TextView
@@ -117,7 +117,7 @@
                     android:layout_below="@id/c"
                     android:layout_marginTop="8dp"
                     android:gravity="center_horizontal"
-                    android:text="Web Site: www.wefixservice.in"
+                    android:text="@string/web_site_www_wefixservice_in"
                     android:textSize="15sp" />
 
                 <TextView
@@ -127,7 +127,7 @@
                     android:layout_below="@id/g"
                     android:layout_marginTop="8dp"
                     android:gravity="center_horizontal"
-                    android:text="West Bengal-19"
+                    android:text="@string/west_bengal_19"
                     android:textSize="15sp" />
 
             </RelativeLayout>
@@ -154,7 +154,7 @@
                     android:id="@+id/customer_name_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Customer Name"
+                    android:text="@string/customer_name"
                     android:textSize="15sp" />
 
                 <TextView
@@ -171,7 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/customer_name_text"
                     android:layout_marginTop="8dp"
-                    android:text="Address"
+                    android:text="@string/address"
                     android:textSize="15sp" />
 
                 <TextView
@@ -190,7 +190,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/customer_address_text"
                     android:layout_marginTop="8dp"
-                    android:text="Phone Number"
+                    android:text="@string/phone_number"
                     android:textSize="15sp" />
 
                 <TextView
@@ -209,7 +209,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/customer_phone_text"
                     android:layout_marginTop="8dp"
-                    android:text="Email"
+                    android:text="@string/email"
                     android:textSize="15sp" />
 
                 <TextView
@@ -246,7 +246,7 @@
                     android:id="@+id/call_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Call ID No."
+                    android:text="@string/call_id_no"
                     android:textSize="15sp" />
 
                 <TextView
@@ -263,7 +263,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/call_text"
                     android:layout_marginTop="8dp"
-                    android:text="Invoice No."
+                    android:text="@string/invoice_no"
                     android:textSize="15sp" />
 
                 <TextView
@@ -282,7 +282,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tax"
                     android:layout_marginTop="8dp"
-                    android:text="Date:"
+                    android:text="@string/date"
                     android:textSize="15sp" />
 
                 <TextView
@@ -301,7 +301,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/date_text"
                     android:layout_marginTop="8dp"
-                    android:text="Work Type:"
+                    android:text="@string/work_type"
                     android:textSize="15sp" />
 
                 <TextView
@@ -320,7 +320,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/service_text"
                     android:layout_marginTop="8dp"
-                    android:text="Payment Type:"
+                    android:text="@string/payment_type"
                     android:textSize="15sp" />
 
                 <TextView
@@ -332,7 +332,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_toEndOf="@id/payment_text"
                     android:gravity="end"
-                    android:text="POS" />
+                    android:text="@string/pos" />
 
             </RelativeLayout>
 
@@ -358,7 +358,7 @@
                     android:id="@+id/desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Description Of \nItem/ Parts"
+                    android:text="@string/description_of_nitem_parts"
                     android:textSize="15sp" />
 
                 <TextView
@@ -375,7 +375,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/desc"
                     android:layout_marginTop="8dp"
-                    android:text="Quantity"
+                    android:text="@string/quantity"
                     android:textSize="15sp" />
 
                 <TextView
@@ -395,7 +395,7 @@
                     android:layout_below="@id/quantity_text"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="8dp"
-                    android:text="Rate:"
+                    android:text="@string/rate"
                     android:textSize="15sp" />
 
                 <TextView
@@ -415,7 +415,7 @@
                     android:layout_below="@id/rate_text"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="8dp"
-                    android:text="CGST: 9%"
+                    android:text="@string/cgst_9"
                     android:textSize="15sp" />
 
                 <TextView
@@ -435,7 +435,7 @@
                     android:layout_below="@id/cgst_text"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="8dp"
-                    android:text="SGST: 9%"
+                    android:text="@string/sgst_9"
                     android:textSize="15sp" />
 
                 <TextView
@@ -455,7 +455,7 @@
                     android:layout_below="@id/sgst_text"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="8dp"
-                    android:text="Parts Amount:"
+                    android:text="@string/parts_amount"
                     android:textSize="15sp" />
 
                 <TextView
@@ -474,7 +474,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/parts_amount"
                     android:layout_marginTop="8dp"
-                    android:text="Total Amount:"
+                    android:text="@string/total_amount"
                     android:textSize="15sp" />
 
                 <TextView
@@ -499,7 +499,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:gravity="end"
-            android:text="Company's PAN: ABMFA5193K"
+            android:text="@string/company_s_pan_abmfa5193k"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -511,7 +511,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:gravity="end"
-            android:text="AAHAN COMMERCIAL AND CO."
+            android:text="@string/aahan_commercial_and_co"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -527,7 +527,7 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/custom_btn3"
             android:padding="10dp"
-            android:text="Complete Log"
+            android:text="@string/complete_log"
             android:textColor="#fff" />
 
     </RelativeLayout>

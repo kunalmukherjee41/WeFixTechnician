@@ -10,70 +10,99 @@ public class Logs implements Serializable {
     @SerializedName("call_log_id")
     @Expose
     private int callLogId;
+
     @SerializedName("call_log_date")
     @Expose
     private String callLogDate;
+
+    @SerializedName("client_ref_id")
+    @Expose
+    int clientRefID;
+
     @SerializedName("call_log_type")
     @Expose
     private String callLogType;
+
     @SerializedName("client_name")
     @Expose
     private String clientName;
+
     @SerializedName("client_address")
     @Expose
     private String clientAddress;
+
     @SerializedName("client_pin")
     @Expose
     private String clientPin;
+
     @SerializedName("client_mb")
     @Expose
     private String clientMb;
+
     @SerializedName("client_email")
     @Expose
     private String clientEmail;
+
     @SerializedName("ref_cat_id")
     @Expose
     private int refCatId;
+
     @SerializedName("ref_service_id")
     @Expose
     private int refServiceId;
+
     @SerializedName("call_company_id")
     @Expose
     private int callCompanyId;
+
     @SerializedName("product_company")
     @Expose
     private String productCompany;
+
     @SerializedName("amount")
     @Expose
     private int amount;
+
     @SerializedName("payment_type")
     @Expose
     private String paymentType;
+
     @SerializedName("problem")
     @Expose
     private String problem;
+
     @SerializedName("entry_tim")
     @Expose
     private String entryTim;
+
     @SerializedName("call_log_status")
     @Expose
     private String callLogStatus;
+
     @SerializedName("call_log_transfer_id")
     @Expose
     private int callLogTransferId;
+
     @SerializedName("client_log_ip")
     @Expose
     private String clientLogIp;
+
     @SerializedName("client_log_timezone")
     @Expose
     private String clientLogTimezone;
+
     @SerializedName("rejected_reason")
     @Expose
     private String rejectedReason;
 
-    public Logs(int callLogId, String callLogDate, String callLogType, String clientName, String clientAddress, String clientPin, String clientMb, String clientEmail, int refCatId, int refServiceId, int callCompanyId, String productCompany, int amount, String paymentType, String problem, String entryTim, String callLogStatus, int callLogTransferId, String clientLogIp, String clientLogTimezone, String rejectedReason) {
+    @SerializedName("ref_delear")
+    @Expose
+    private int refDelear;
+
+    public Logs(int callLogId, String callLogDate, int clientRefID, String callLogType, String clientName, String clientAddress, String clientPin, String clientMb, String clientEmail, int refCatId, int refServiceId, int callCompanyId, String productCompany, int amount, String paymentType, String problem, String entryTim, String callLogStatus, int callLogTransferId, String clientLogIp, String clientLogTimezone, String rejectedReason, int refDelear) {
         this.callLogId = callLogId;
         this.callLogDate = callLogDate;
+        this.clientRefID = clientRefID;
         this.callLogType = callLogType;
         this.clientName = clientName;
         this.clientAddress = clientAddress;
@@ -93,6 +122,7 @@ public class Logs implements Serializable {
         this.clientLogIp = clientLogIp;
         this.clientLogTimezone = clientLogTimezone;
         this.rejectedReason = rejectedReason;
+        this.refDelear = refDelear;
     }
 
     public int getCallLogId() {
@@ -109,6 +139,14 @@ public class Logs implements Serializable {
 
     public void setCallLogDate(String callLogDate) {
         this.callLogDate = callLogDate;
+    }
+
+    public int getClientRefID() {
+        return clientRefID;
+    }
+
+    public void setClientRefID(int clientRefID) {
+        this.clientRefID = clientRefID;
     }
 
     public String getCallLogType() {
@@ -261,5 +299,13 @@ public class Logs implements Serializable {
 
     public void setRejectedReason(String rejectedReason) {
         this.rejectedReason = rejectedReason;
+    }
+
+    public int getRefDelear() {
+        return refDelear;
+    }
+
+    public void setRefDelear(int refDelear) {
+        this.refDelear = refDelear;
     }
 }

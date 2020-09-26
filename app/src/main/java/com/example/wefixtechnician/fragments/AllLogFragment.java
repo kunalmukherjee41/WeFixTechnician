@@ -1,20 +1,20 @@
 package com.example.wefixtechnician.fragments;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.wefixtechnician.Api.RetrofitClient;
 import com.example.wefixtechnician.R;
@@ -25,7 +25,6 @@ import com.example.wefixtechnician.storage.SharedPrefManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,7 +35,7 @@ public class AllLogFragment extends Fragment implements SwipeRefreshLayout.OnRef
     private RecyclerView recyclerView;
     private List<Logs> logsList;
 
-    ProgressDialog progressBar;
+    private LogHistoryAdapter adapter;
 
     SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -49,6 +48,22 @@ public class AllLogFragment extends Fragment implements SwipeRefreshLayout.OnRef
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        SearchView searchView = view.findViewById(R.id.search_view);
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (adapter != null)
+                    adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         mSwipeRefreshLayout = view.findViewById(R.id.container);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -63,17 +78,12 @@ public class AllLogFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
     public void getLog() {
 
-//        progressBar = new ProgressDialog(getActivity());
-//        progressBar.show();
-//        progressBar.setContentView(R.layout.progress_dialog);
-//        Objects.requireNonNull(progressBar.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
-
         int ref_technician_id = SharedPrefManager.getInstance(getActivity()).getTechnician().getTbl_technician_id();
 
         Call<LogResponse> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .getCallLogForTechnician(ref_technician_id, "app");
+                .getCallLogForTechnician(ref_technician_id);
 
         call.enqueue(
                 new Callback<LogResponse>() {
@@ -82,7 +92,6 @@ public class AllLogFragment extends Fragment implements SwipeRefreshLayout.OnRef
                         if (response.isSuccessful()) {
                             assert response.body() != null;
                             logsList = response.body().getLog();
-//                            Toast.makeText(getActivity(), "Successful", Toast.LENGTH_LONG).show();
                             List<Logs> logs = new ArrayList<>();
                             for (Logs logs1 : logsList) {
                                 if (logs1.getCallLogStatus().equals("CANCEL") || logs1.getCallLogStatus().equals("CLOSE") || logs1.getCallLogStatus().equals("REJECT") || logs1.getCallLogStatus().equals("COMPLETE")) {
@@ -90,7 +99,7 @@ public class AllLogFragment extends Fragment implements SwipeRefreshLayout.OnRef
                                 }
                             }
                             recyclerView.setItemViewCacheSize(logs.size());
-                            LogHistoryAdapter adapter = new LogHistoryAdapter(getActivity(), logs);
+                            adapter = new LogHistoryAdapter(getActivity(), logs);
                             adapter.setHasStableIds(true);
                             adapter.notifyDataSetChanged();
                             recyclerView.setAdapter(adapter);
@@ -104,7 +113,6 @@ public class AllLogFragment extends Fragment implements SwipeRefreshLayout.OnRef
                     @Override
                     public void onFailure(Call<LogResponse> call, Throwable t) {
                         Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
-//                        progressBar.dismiss();
 
                     }
                 }

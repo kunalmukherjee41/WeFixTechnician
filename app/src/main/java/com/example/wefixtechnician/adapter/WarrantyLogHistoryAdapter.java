@@ -50,7 +50,7 @@ public class WarrantyLogHistoryAdapter extends RecyclerView.Adapter<WarrantyLogH
         Call<Company1Response> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .getCompanyById(warrantyLog.getRefCompanyId(), "app");
+                .getCompanyById(warrantyLog.getRefCompanyId());
 
         call.enqueue(
                 new Callback<Company1Response>() {
@@ -80,7 +80,7 @@ public class WarrantyLogHistoryAdapter extends RecyclerView.Adapter<WarrantyLogH
                 v -> {
                     WarrantyLog log = warrantyLogsList.get(position);
                     Intent intent = new Intent(mContext, WarrantyLogHistoryActivity.class);
-                    intent.putExtra("log", (Serializable) log);
+                    intent.putExtra("log", log);
                     intent.putExtra("company", company1.getTblCompanyName());
                     mContext.startActivity(intent);
                 }

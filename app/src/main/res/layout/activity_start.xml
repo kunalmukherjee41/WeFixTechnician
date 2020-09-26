@@ -11,6 +11,7 @@
         android:layout_height="130dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:contentDescription="@string/image"
         android:src="@drawable/logo" />
 
     <LinearLayout
@@ -25,7 +26,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:gravity="center"
-            android:text="From"
+            android:text="@string/from"
             android:textAlignment="center"
             android:textColor="@android:color/holo_orange_dark"
             android:textSize="20sp"
@@ -37,7 +38,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:gravity="center"
-            android:text="Aahan Commercial and co."
+            android:text="@string/aahan_commercial_and_co"
             android:textAlignment="center"
             android:textColor="#43BEEF"
             android:textSize="20sp"
@@ -47,7 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="100dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -56,7 +58,7 @@
                 android:paddingStart="110dp"
                 android:paddingTop="7dp"
                 android:paddingEnd="6dp"
-                android:text="Made In India"
+                android:text="@string/made_in_india"
                 android:textColor="#000"
                 android:textSize="20sp"
                 android:textStyle="italic|bold" />
@@ -64,6 +66,7 @@
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="40dp"
+                android:contentDescription="@string/image"
                 android:src="@drawable/indianflag" />
 
         </LinearLayout>

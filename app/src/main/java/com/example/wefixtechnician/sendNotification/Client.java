@@ -1,8 +1,5 @@
 package com.example.wefixtechnician.sendNotification;
 
-import com.example.wefixtechnician.Api.Api;
-import com.example.wefixtechnician.Api.RetrofitClient;
-
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

@@ -2,12 +2,10 @@ package com.example.wefixtechnician.ui;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorSpace;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
@@ -15,7 +13,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
-import android.widget.ActionMenuView;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -37,14 +34,12 @@ import com.example.wefixtechnician.model.Service;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.SimpleTimeZone;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -55,9 +50,7 @@ public class CompleteLogActivity extends AppCompatActivity {
 
     private Category category;
     private Service service;
-
     private float txtPartAmount = 0, totalAmount;
-
     private ProgressBar progressBar;
 
     private int service_id;
@@ -70,16 +63,13 @@ public class CompleteLogActivity extends AppCompatActivity {
     private String rate_1, txt_cgst1;
 
     private TextView partsAmount;
-    private TextView invoice, date, serviceTextView;
-    private TextView categoryTextView, quantity;
-    private TextView rate, cgst, sgst, total, callID;
+    private TextView categoryTextView;
+    private TextView total;
     private Logs logs;
-    private TextView name, address, phone, email;
-    private Button complete;
 
     private List<Parts> parts;
-    private int pageWidth = 750;
-    private int pageHeight = 1200;
+    int pageWidth = 750;
+    int pageHeight = 1200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +83,7 @@ public class CompleteLogActivity extends AppCompatActivity {
 
         assert serviceName != null;
         if (serviceName.equals("visit")) {
-            int serviceID = intent.getIntExtra("service", 0);
-            service_id = serviceID;
+            service_id = intent.getIntExtra("service", 0);
             amount = "268";
         } else {
             service = (Service) intent.getSerializableExtra("service");
@@ -115,7 +104,7 @@ public class CompleteLogActivity extends AppCompatActivity {
         Call<PartsResponse> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .getParts(logs.getCallLogId(), "app");
+                .getParts(logs.getCallLogId());
 
         call.enqueue(
                 new Callback<PartsResponse>() {
@@ -137,7 +126,15 @@ public class CompleteLogActivity extends AppCompatActivity {
                             categoryTextView.setText(txtPartsDesc);
                             partsAmount.setText(String.valueOf(txtPartAmount));
                             if (!serviceName.equals("visit")) {
-                                totalAmount = txtPartAmount + service.getTbl_services_charge();
+                                if (logs.getRefServiceId() == service.getTbl_services_id()) {
+                                    totalAmount = txtPartAmount + logs.getAmount();
+                                } else {
+                                    if (logs.getRefDelear() != 0) {
+                                        totalAmount = (float) (txtPartAmount + service.getTblDelearServicesCharge());
+                                    } else {
+                                        totalAmount = txtPartAmount + service.getTbl_services_charge();
+                                    }
+                                }
                                 total.setText(String.valueOf(totalAmount));
                             } else {
                                 totalAmount = txtPartAmount + 268;
@@ -160,28 +157,29 @@ public class CompleteLogActivity extends AppCompatActivity {
                 }
         );
 
-        invoice = findViewById(R.id.invoice);
-        date = findViewById(R.id.date);
-        serviceTextView = findViewById(R.id.service);
+        TextView invoice = findViewById(R.id.invoice);
+        TextView date = findViewById(R.id.date);
+        TextView serviceTextView = findViewById(R.id.service);
         categoryTextView = findViewById(R.id.category);
-        quantity = findViewById(R.id.quantity);
-        rate = findViewById(R.id.rate);
-        cgst = findViewById(R.id.cgst);
-        sgst = findViewById(R.id.sgst);
+        TextView quantity = findViewById(R.id.quantity);
+        TextView rate = findViewById(R.id.rate);
+        TextView cgst = findViewById(R.id.cgst);
+        TextView sgst = findViewById(R.id.sgst);
         total = findViewById(R.id.total);
 
-        name = findViewById(R.id.customer_name);
-        address = findViewById(R.id.customer_address);
-        phone = findViewById(R.id.customer_phone);
-        email = findViewById(R.id.customer_email);
-        callID = findViewById(R.id.call);
+        TextView name = findViewById(R.id.customer_name);
+        TextView address = findViewById(R.id.customer_address);
+        TextView phone = findViewById(R.id.customer_phone);
+        TextView email = findViewById(R.id.customer_email);
+        TextView callID = findViewById(R.id.call);
 
         callID.setText(String.valueOf(logs.getCallLogId()));
 
-        complete = findViewById(R.id.complete);
+        Button complete = findViewById(R.id.complete);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
         currentDate = sdf.format(new Date());
+
         currentTime = Calendar.getInstance().getTime();
 
         invoiceNum = logs.getCallLogId() + "1";
@@ -195,7 +193,15 @@ public class CompleteLogActivity extends AppCompatActivity {
         if (serviceName.equals("visit")) {
             rate_ = 268 / 1.18;
         } else {
-            rate_ = service.getTbl_services_charge() / 1.18;
+            if (logs.getRefServiceId() == service.getTbl_services_id()) {
+                rate_ = logs.getAmount() / 1.18;
+            } else {
+                if (logs.getRefDelear() != 0) {
+                    rate_ = service.getTblDelearServicesCharge() / 1.8;
+                } else {
+                    rate_ = service.getTbl_services_charge() / 1.18;
+                }
+            }
         }
         rate_1 = String.format(Locale.CANADA, "%.2f", rate_);
         rate.setText(rate_1);
@@ -211,11 +217,11 @@ public class CompleteLogActivity extends AppCompatActivity {
 
         complete.setOnClickListener(
                 v -> {
-
+//                        sendPdfToCustomer()
                     if (isStoragePermissionGranted(this)) {
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(CompleteLogActivity.this));
-                        builder.setMessage("Are You Want To Send A copy to Customer?")
+                        builder.setMessage("Are You Want To get A copy for Customer?")
                                 .setCancelable(false)
                                 .setPositiveButton("Yes", (dialog, id) -> {
                                     sendPdfToCustomer();
@@ -228,7 +234,7 @@ public class CompleteLogActivity extends AppCompatActivity {
                                                 Call<ResponseBody> call1 = RetrofitClient
                                                         .getInstance()
                                                         .getApi()
-                                                        .completeCallLog(call_log_id, service_id, "COMPLETE", amount);
+                                                        .completeCallLog(call_log_id, service_id, "COMPLETE", String.valueOf(totalAmount), currentDate);
 
                                                 call1.enqueue(
                                                         new Callback<ResponseBody>() {
@@ -246,9 +252,7 @@ public class CompleteLogActivity extends AppCompatActivity {
                                                 Intent intent1 = new Intent(CompleteLogActivity.this, MessageActivity.class);
                                                 startActivity(intent1);
                                             })
-                                            .setNegativeButton("No", (dialog1, id1) -> {
-                                                dialog1.cancel();
-                                            });
+                                            .setNegativeButton("No", (dialog1, id1) -> dialog1.cancel());
                                     AlertDialog alert = builder1.create();
                                     alert.show();
                                 })
@@ -262,7 +266,7 @@ public class CompleteLogActivity extends AppCompatActivity {
                                                 Call<ResponseBody> call1 = RetrofitClient
                                                         .getInstance()
                                                         .getApi()
-                                                        .completeCallLog(call_log_id, service_id, "COMPLETE", amount);
+                                                        .completeCallLog(call_log_id, service_id, "COMPLETE", amount, currentDate);
 
                                                 call1.enqueue(
                                                         new Callback<ResponseBody>() {
@@ -280,9 +284,7 @@ public class CompleteLogActivity extends AppCompatActivity {
                                                 Intent intent1 = new Intent(CompleteLogActivity.this, MessageActivity.class);
                                                 startActivity(intent1);
                                             })
-                                            .setNegativeButton("No", (dialog1, id1) -> {
-                                                dialog1.cancel();
-                                            });
+                                            .setNegativeButton("No", (dialog1, id1) -> dialog1.cancel());
                                     AlertDialog alert = builder1.create();
                                     alert.show();
                                 });
@@ -311,11 +313,11 @@ public class CompleteLogActivity extends AppCompatActivity {
 
         canvas.drawLine(220, 490, 220, 950, paint);
         canvas.drawLine(300, 490, 300, 950, paint);
-        canvas.drawLine(pageWidth / 2 + 5, 490, pageWidth / 2, 950, paint);
-        canvas.drawLine(460, 490, 460, 950, paint);
-        canvas.drawLine(530, 490, 530, 950, paint);
+        canvas.drawLine(pageWidth / 2 + 10, 490, pageWidth / 2 + 10, 950, paint);
+        canvas.drawLine(470, 490, 470, 950, paint);
+        canvas.drawLine(550, 490, 550, 950, paint);
 
-        canvas.drawLine(610, 910, 610, 950, paint);
+        canvas.drawLine(625, 910, 625, 950, paint);
         canvas.drawLine(20, 910, pageWidth - 20, 910, paint);
 
         canvas.drawLine(20, 320, pageWidth - 20, 320, paint);
@@ -378,7 +380,7 @@ public class CompleteLogActivity extends AppCompatActivity {
         canvas.drawText("%9", 480, 530, paint);
         canvas.drawText("Amount", 580, 510, paint);
 
-        canvas.drawText("TOTAL-", 540, 935, paint);
+        canvas.drawText("TOTAL-", 560, 935, paint);
 
         canvas.drawText(category.getTbl_category_name(), 40, 570, paint);
         canvas.drawText(rate_1, 320, 570, paint);
@@ -390,8 +392,14 @@ public class CompleteLogActivity extends AppCompatActivity {
             canvas.drawText(String.valueOf(service.getTbl_services_charge()), 580, 570, paint);
         int i = 580;
         for (Parts p : parts) {
+            String pCGST = String.format(Locale.CANADA, "%.2f", p.getAmount() * .18);
             canvas.drawText(p.getPartsDes(), 40, i + 40, paint);
+            canvas.drawText(String.format(Locale.CANADA, "%.2f", p.getAmount() - p.getAmount() * .18), 320, i + 40, paint);
+            canvas.drawText(pCGST, 400, i + 40, paint);
+            canvas.drawText(pCGST, 480, i + 40, paint);
             canvas.drawText(String.valueOf(p.getAmount()), 580, i + 40, paint);
+
+            i += 40;
         }
 
         paint.setTextAlign(Paint.Align.RIGHT);

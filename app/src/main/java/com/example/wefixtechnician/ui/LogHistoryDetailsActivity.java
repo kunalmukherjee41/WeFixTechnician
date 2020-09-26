@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -55,6 +55,7 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
     private Logs logs;
 
     private Button addParts;
+    private Button showParts;
     private RelativeLayout layoutParts;
     private TextView partsDetails, partsAmount;
 
@@ -90,7 +91,7 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
         getCategory(logs.getRefCatId());
         getService(logs.getRefServiceId(), logs.getRefCatId());
 
-        //textViews
+        //TextView
         category = findViewById(R.id.category);
         TextView name = findViewById(R.id.name);
         TextView address = findViewById(R.id.address);
@@ -113,11 +114,15 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
         Button installation = findViewById(R.id.installation);
         Button onlyService = findViewById(R.id.service_only);
         Button onlyVisit = findViewById(R.id.visit);
+        Button continueLog = findViewById(R.id.continue_log);
 
         //cardViews
         CardView cardViewCall = findViewById(R.id.layout_call);
-        CardView cardViewMessage = findViewById(R.id.send_notification);
+        CardView cardViewMessage = findViewById(R.id.send_notification_card_view);
         CardView cardViewExtraParts = findViewById(R.id.card_view_extra_parts);
+        if (logs.getRefDelear() > 0) {
+            cardViewMessage.setVisibility(View.GONE);
+        }
         if (logs.getCallLogStatus().equals("CANCEL") || logs.getCallLogStatus().equals("CLOSE") || logs.getCallLogStatus().equals("REJECT") || logs.getCallLogStatus().equals("COMPLETE")) {
             cardViewMessage.setVisibility(View.GONE);
             cardViewCall.setVisibility(View.GONE);
@@ -127,6 +132,8 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
         //Buttons
         addParts = findViewById(R.id.add_parts);
         Button submitParts = findViewById(R.id.submit_parts);
+        showParts = findViewById(R.id.show_parts);
+        Button cancel = findViewById(R.id.cancel);
 
         layoutParts = findViewById(R.id.layout_part);
         layoutParts.setVisibility(View.GONE);
@@ -149,6 +156,30 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
 
         send.setOnClickListener(
                 v -> getUserToken(logs.getClientEmail())
+        );
+
+        continueLog.setOnClickListener(
+                v -> {
+                    Intent intent = new Intent(LogHistoryDetailsActivity.this, CompleteLogActivity.class);
+                    if (!serviceList.isEmpty()) {
+                        if (logs.getRefServiceId() == 37) {
+                            intent.putExtra("service", 37);
+                            intent.putExtra("name", "visit");
+                        } else {
+                            for (Service s : serviceList) {
+                                if (s.getTbl_services_id() == logs.getRefServiceId()) {
+                                    intent.putExtra("service", s);
+                                    intent.putExtra("name", s.getTbl_services_name().toLowerCase());
+                                }
+                            }
+                        }
+                    }
+                    if (cat != null) {
+                        intent.putExtra("category", cat);
+                    }
+                    intent.putExtra("log", logs);
+                    startActivity(intent);
+                }
         );
 
         installation.setOnClickListener(
@@ -207,15 +238,28 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
                 v -> {
                     layoutParts.setVisibility(View.VISIBLE);
                     addParts.setVisibility(View.GONE);
+                    showParts.setVisibility(View.GONE);
+                }
+        );
+
+        showParts.setOnClickListener(
+                v -> {
+                    Intent intent = new Intent(LogHistoryDetailsActivity.this, DisplayAllPartsActivity.class);
+                    intent.putExtra("logs", logs);
+                    startActivity(intent);
+                }
+        );
+
+        cancel.setOnClickListener(
+                v -> {
+                    showParts.setVisibility(View.VISIBLE);
+                    addParts.setVisibility(View.VISIBLE);
+                    layoutParts.setVisibility(View.GONE);
                 }
         );
 
         submitParts.setOnClickListener(
                 v -> {
-                    ProgressDialog progressBar1 = new ProgressDialog(this);
-                    progressBar1.show();
-                    progressBar1.setContentView(R.layout.progress_dialog);
-                    Objects.requireNonNull(progressBar1.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
 
                     int txtCallLogID = logs.getCallLogId();
                     int txtTechnicianID = SharedPrefManager.getInstance(this).getTechnician().getTbl_technician_id();
@@ -227,36 +271,51 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
                     String txtPartsAmount = partsAmount.getText().toString();
 
                     if (TextUtils.isEmpty(txtPartsDetail)) {
-                        progressBar1.dismiss();
                         Toast.makeText(LogHistoryDetailsActivity.this, "Enter the Parts Details", Toast.LENGTH_SHORT).show();
                         partsDetails.setFocusable(true);
                     } else if (TextUtils.isEmpty(txtPartsAmount)) {
-                        progressBar1.dismiss();
                         Toast.makeText(LogHistoryDetailsActivity.this, "Enter the amount of the parts", Toast.LENGTH_SHORT).show();
                         partsAmount.setFocusable(true);
                     } else {
-                        Call<My1Response> call = RetrofitClient
-                                .getInstance()
-                                .getApi()
-                                .addParts(txtCallLogID, txtTechnicianID, txtPartsDetail, txtPartsAmount, currentDate, currentTime);
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(Objects.requireNonNull(LogHistoryDetailsActivity.this));
+                        builder1.setMessage("Are you want Complete the Call Log?")
+                                .setCancelable(false)
+                                .setPositiveButton("Yes", (dialog1, id1) -> {
+                                    ProgressDialog progressBar1 = new ProgressDialog(this);
+                                    progressBar1.show();
+                                    progressBar1.setContentView(R.layout.progress_dialog);
+                                    Objects.requireNonNull(progressBar1.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
 
-                        call.enqueue(
-                                new Callback<My1Response>() {
-                                    @Override
-                                    public void onResponse(Call<My1Response> call, Response<My1Response> response) {
-                                        assert response.body() != null;
-                                        Toast.makeText(LogHistoryDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                        progressBar1.dismiss();
-                                        partsAmount.setText("");
-                                        partsDetails.setText("");
-                                    }
+                                    Call<My1Response> call = RetrofitClient
+                                            .getInstance()
+                                            .getApi()
+                                            .addParts(txtCallLogID, txtTechnicianID, txtPartsDetail, txtPartsAmount, currentDate, currentTime);
 
-                                    @Override
-                                    public void onFailure(Call<My1Response> call, Throwable t) {
-                                        progressBar1.dismiss();
-                                    }
-                                }
-                        );
+                                    call.enqueue(
+                                            new Callback<My1Response>() {
+                                                @Override
+                                                public void onResponse(Call<My1Response> call, Response<My1Response> response) {
+                                                    assert response.body() != null;
+                                                    Toast.makeText(LogHistoryDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                                    progressBar1.dismiss();
+                                                    partsAmount.setText("");
+                                                    partsDetails.setText("");
+                                                    showParts.setVisibility(View.VISIBLE);
+                                                    addParts.setVisibility(View.VISIBLE);
+                                                    layoutParts.setVisibility(View.GONE);
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<My1Response> call, Throwable t) {
+                                                    progressBar1.dismiss();
+                                                    Toast.makeText(LogHistoryDetailsActivity.this, "Parts Not Added", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                    );
+                                })
+                                .setNegativeButton("No", (dialog1, id1) -> dialog1.cancel());
+                        AlertDialog alert = builder1.create();
+                        alert.show();
 
                     }
                 }
@@ -273,7 +332,7 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
         Call<Service1Response> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .getServiceByID(refCatID, "APP");
+                .getServiceByID(refCatID);
 
         call.enqueue(
                 new Callback<Service1Response>() {
@@ -291,7 +350,7 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
 //                            ArrayAdapter<String> adapter = new ArrayAdapter<>(LogHistoryDetailsActivity.this, R.layout.support_simple_spinner_dropdown_item, serviceItem);
                             service.setText(serviceName[0]);
                             if (logs.getRefServiceId() == 37) {
-                                service.setText("Only Visit");
+                                service.setText(R.string.only_visit);
                             }
                             progressBar.dismiss();
                         }
@@ -313,13 +372,14 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
         Call<Category1Response> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .getCategoryByID(refCatId, "aa");
+                .getCategoryByID(refCatId);
 
         call.enqueue(
                 new Callback<Category1Response>() {
                     @Override
                     public void onResponse(Call<Category1Response> call, Response<Category1Response> response) {
                         if (response.isSuccessful()) {
+                            assert response.body() != null;
                             cat = response.body().getCategory();
                             category.setText(cat.getTbl_category_name());
                         }
@@ -375,6 +435,7 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
                                         }
                                     });
                                 } else {
+                                    progressDialog.dismiss();
                                     Toast.makeText(LogHistoryDetailsActivity.this, "Try Again", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -382,6 +443,7 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<UserResponse> call, Throwable t) {
+                            progressDialog.dismiss();
                             Toast.makeText(LogHistoryDetailsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -407,8 +469,8 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(LogHistoryDetailsActivity.this, "Successfully send", Toast.LENGTH_LONG).show();
                     }
-                    progressDialog.dismiss();
                 }
+                progressDialog.dismiss();
             }
 
             @Override

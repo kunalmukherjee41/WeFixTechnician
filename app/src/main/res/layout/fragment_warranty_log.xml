@@ -29,7 +29,7 @@
                 android:layout_marginTop="10dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="5dp"
-                android:text="Warranty Logs"
+                android:text="@string/warranty_logs"
                 android:textColor="#0640e0"
                 android:textSize="18sp" />
 
@@ -48,7 +48,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center_horizontal"
-            android:text="No Record"
+            android:text="@string/no_record"
             android:textSize="20sp" />
 
     </RelativeLayout>

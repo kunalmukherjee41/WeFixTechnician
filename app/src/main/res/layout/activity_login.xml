@@ -18,6 +18,7 @@
             android:layout_height="70dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="90dp"
+            android:contentDescription="@string/image"
             android:src="@drawable/logo" />
 
         <TextView
@@ -26,7 +27,7 @@
             android:layout_below="@+id/logo"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="Welcome To\nWeFix Technician"
+            android:text="@string/welcome_to_nwefix_technician"
             android:textColor="#0640e0"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -54,7 +55,7 @@
                     android:background="@drawable/custom_textview"
                     android:fontFamily="sans-serif-condensed-light"
                     android:gravity="center"
-                    android:text="Login"
+                    android:text="@string/login"
                     android:textColor="#0640e0"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -64,10 +65,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="30dp"
+                    android:autofillHints="@string/email"
                     android:background="@drawable/custom_edit_text"
                     android:drawableStart="@drawable/username_asset"
                     android:fontFamily="sans-serif-condensed"
-                    android:hint="Email"
+                    android:hint="@string/email"
                     android:inputType="textEmailAddress"
                     android:padding="10dp" />
 
@@ -80,10 +82,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="10dp"
+                        android:autofillHints="@string/password"
                         android:background="@drawable/custom_edit_text"
                         android:drawableStart="@drawable/password_asset"
                         android:fontFamily="sans-serif-condensed"
-                        android:hint="Password"
+                        android:hint="@string/password"
                         android:inputType="textPassword"
                         android:padding="10dp" />
 
@@ -96,6 +99,7 @@
                         android:layout_marginTop="22.5dp"
                         android:layout_marginEnd="15dp"
                         android:alpha=".5"
+                        android:contentDescription="@string/image"
                         android:onClick="ShowHidePass"
                         android:src="@drawable/password_visible_asset" />
 
@@ -108,7 +112,7 @@
                     android:layout_gravity="end"
                     android:layout_marginTop="13dp"
                     android:background="@drawable/custom_btn"
-                    android:text="Login"
+                    android:text="@string/login"
                     android:textColor="#fff"
                     android:textStyle="bold" />
 
@@ -121,7 +125,7 @@
                     android:gravity="end"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:text="Forgot Password ?"
+                    android:text="@string/forgot_password"
                     android:textColor="#0640e0" />
 
             </LinearLayout>

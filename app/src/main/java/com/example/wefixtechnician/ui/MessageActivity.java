@@ -1,15 +1,14 @@
 package com.example.wefixtechnician.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.wefixtechnician.R;
-import com.example.wefixtechnician.storage.SharedPrefManager;
 
 import java.util.Objects;
 

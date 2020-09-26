@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:elevation="8dp"
+    app:cardCornerRadius="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/txt_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/id"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/cancel"
+            android:layout_toEndOf="@id/txt_id"
+            android:gravity="end"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/cancel"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:background="#fff"
+            android:contentDescription="@string/delete"
+            android:elevation="8dp"
+            android:src="@drawable/ic_cancel" />
+
+        <TextView
+            android:id="@+id/txt_parts_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cancel"
+            android:layout_marginTop="8dp"
+            android:text="@string/parts_name" />
+
+        <TextView
+            android:id="@+id/parts_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cancel"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@id/txt_parts_name"
+            android:gravity="end" />
+
+        <TextView
+            android:id="@+id/txt_parts_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/parts_name"
+            android:layout_marginTop="8dp"
+            android:text="@string/parts_amount" />
+
+        <TextView
+            android:id="@+id/parts_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/parts_name"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@id/txt_parts_amount"
+            android:gravity="end" />
+
+        <TextView
+            android:id="@+id/txt_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/parts_amount"
+            android:layout_marginTop="8dp"
+            android:text="@string/entry_date_and_time" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/parts_amount"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@id/txt_date"
+            android:gravity="end" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

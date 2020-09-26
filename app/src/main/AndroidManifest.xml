@@ -17,6 +17,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".ui.DisplayAllPartsActivity"
+            android:parentActivityName=".ui.LogHistoryDetailsActivity"/>
         <activity
             android:name=".ui.MessageActivity"
             android:parentActivityName=".ui.MainActivity" />

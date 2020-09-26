@@ -20,8 +20,6 @@ import com.example.wefixtechnician.Api.RetrofitClient;
 import com.example.wefixtechnician.R;
 import com.example.wefixtechnician.fragments.AllLogFragment;
 import com.example.wefixtechnician.fragments.CallLogFragment;
-import com.example.wefixtechnician.fragments.LogFragment;
-import com.example.wefixtechnician.fragments.PaymentFragment;
 import com.example.wefixtechnician.storage.SharedPrefManager;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -103,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
             this.titles = new ArrayList<>();
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             return fragments.get(position);
@@ -139,6 +138,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+//        searchView.setSearchableInfo(
+//                searchManager.getSearchableInfo(getComponentName()));
+//        searchView.setIconifiedByDefault(false);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                fetchContact("users", newText);
+//                return false;
+//            }
+//        });
+
         return true;
     }
 

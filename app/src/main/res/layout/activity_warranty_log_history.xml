@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
-                android:text="Full Call Log Details"
+                android:text="@string/full_call_log_details"
                 android:textColor="#fff"
                 android:textSize="30sp" />
 
@@ -74,7 +74,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/category"
                         android:layout_marginTop="30dp"
-                        android:text="Customer Details"
+                        android:text="@string/customer_details"
                         android:textColor="#2e9cf3"
                         android:textSize="18sp" />
 
@@ -94,7 +94,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="Address"
+                                android:text="@string/address"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -119,7 +119,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="Pin Code"
+                                android:text="@string/pin_code"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -143,7 +143,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="Email"
+                                android:text="@string/email"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -168,7 +168,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="Phone"
+                                android:text="@string/phone_number"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -192,7 +192,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="Date"
+                                android:text="@string/date"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -216,7 +216,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="Name"
+                                android:text="@string/name"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -240,7 +240,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="Company"
+                                android:text="@string/company"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -264,7 +264,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="Model No"
+                                android:text="@string/model_no"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -288,7 +288,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="Serial No"
+                                android:text="@string/serial_no"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -312,7 +312,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="Purchase Date"
+                                android:text="@string/purchase_date"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -336,7 +336,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="Status"
+                                android:text="@string/status"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -360,7 +360,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="Problem"
+                                android:text="@string/problem"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 

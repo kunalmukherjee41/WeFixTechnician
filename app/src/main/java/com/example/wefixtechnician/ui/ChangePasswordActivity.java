@@ -19,6 +19,8 @@ import com.example.wefixtechnician.R;
 import com.example.wefixtechnician.model.My1Response;
 import com.example.wefixtechnician.storage.SharedPrefManager;
 
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,7 +37,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         currentPass = findViewById(R.id.current_password);
         newPassword = findViewById(R.id.new_password);

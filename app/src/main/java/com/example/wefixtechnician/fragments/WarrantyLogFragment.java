@@ -61,17 +61,12 @@ public class WarrantyLogFragment extends Fragment implements SwipeRefreshLayout.
 
     private void getLog() {
 
-//        progressBar = new ProgressDialog(getActivity());
-//        progressBar.show();
-//        progressBar.setContentView(R.layout.progress_dialog);
-//        Objects.requireNonNull(progressBar.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
-
         int tblDelearId = SharedPrefManager.getInstance(getActivity()).getTechnician().getTbl_technician_id();
 
         Call<WarrantyLogResponse> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .getWarrantyCallLog(tblDelearId, "APP");
+                .getWarrantyCallLog(tblDelearId);
 
         call.enqueue(
                 new Callback<WarrantyLogResponse>() {
@@ -89,9 +84,7 @@ public class WarrantyLogFragment extends Fragment implements SwipeRefreshLayout.
                             } else {
                                 noRecord.setVisibility(View.VISIBLE);
                             }
-//                            progressBar.dismiss();
                         } else {
-//                            progressBar.dismiss();
                             Toast.makeText(getActivity(), "Logs Not Loaded! Something went wrong try Again", Toast.LENGTH_LONG).show();
                         }
                     }

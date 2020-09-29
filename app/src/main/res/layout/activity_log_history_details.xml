@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/custom_textview1"
+                    android:background="@drawable/custom_textview"
                     android:gravity="center"
                     android:text="@string/log_details"
                     android:textColor="#344EDD"
@@ -100,8 +100,8 @@
                             android:id="@+id/name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="55dp"
-                            android:gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center_vertical|end"
                             android:textSize="18sp" />
 
                     </LinearLayout>
@@ -116,7 +116,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-
                             android:text="@string/address"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -125,8 +124,8 @@
                             android:id="@+id/address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="35dp"
-                            android:gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center_vertical|end"
                             android:lines="2"
                             android:textSize="18sp" />
 
@@ -150,8 +149,8 @@
                             android:id="@+id/pin"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="35dp"
-                            android:gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center_vertical|end"
                             android:textSize="18sp" />
 
                     </LinearLayout>
@@ -166,7 +165,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="@string/email_id"
+                            android:text="@string/email"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -174,8 +173,8 @@
                             android:id="@+id/email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
-                            android:gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center_vertical|end"
                             android:textSize="18sp" />
 
                     </LinearLayout>
@@ -198,8 +197,8 @@
                             android:id="@+id/phone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
-                            android:gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center_vertical|end"
                             android:textSize="18sp" />
 
                     </LinearLayout>
@@ -222,8 +221,8 @@
                             android:id="@+id/date"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="65dp"
-                            android:gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center_vertical|end"
                             android:textSize="18sp" />
 
                     </LinearLayout>
@@ -246,8 +245,8 @@
                             android:id="@+id/company"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="25dp"
-                            android:gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center_vertical|end"
                             android:textSize="18sp" />
 
                     </LinearLayout>
@@ -270,8 +269,8 @@
                             android:id="@+id/service"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="25dp"
-                            android:gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center_vertical|end"
                             android:textSize="18sp" />
 
                     </LinearLayout>
@@ -294,8 +293,8 @@
                             android:id="@+id/amount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
-                            android:gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center_vertical|end"
                             android:textSize="18sp" />
 
                     </LinearLayout>
@@ -318,8 +317,8 @@
                             android:id="@+id/problem_des"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
-                            android:gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center_vertical|end"
                             android:textSize="18sp" />
 
                     </LinearLayout>
@@ -342,8 +341,8 @@
                             android:id="@+id/status"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="50dp"
-                            android:gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center_vertical|end"
                             android:textSize="18sp" />
 
                     </LinearLayout>
@@ -355,10 +354,57 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_pdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/log_details"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="20dp">
+
+            <TextView
+                android:id="@+id/txt_pdf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_textview1"
+                android:gravity="center"
+                android:text="View PDF"
+                android:textColor="#1E73F4"
+                android:textSize="20sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:gravity="center_vertical"
+                android:labelFor="@id/bill"
+                android:padding="10dp">
+
+                <Button
+                    android:id="@+id/view_pdf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/custom_btn3"
+                    android:padding="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="View Invoice"
+                    android:textColor="#fff" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:id="@+id/send_notification_card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/log_details"
+            android:layout_below="@+id/card_view_pdf"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:elevation="8dp"
@@ -418,88 +464,6 @@
                     android:elevation="8dp"
                     android:gravity="center"
                     android:text="@string/send"
-                    android:textColor="#fff" />
-
-            </RelativeLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/layout_call"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/card_view_extra_parts"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            app:cardCornerRadius="20dp">
-
-            <TextView
-                android:id="@+id/bill"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/custom_textview1"
-                android:gravity="center"
-                android:text="@string/complete_call_and_generate_bill"
-                android:textColor="#1E73F4"
-                android:textSize="20sp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:gravity="center_vertical"
-                android:labelFor="@id/bill"
-                android:padding="10dp">
-
-                <Button
-                    android:id="@+id/installation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginEnd="3dp"
-                    android:background="@drawable/custom_btn3"
-                    android:padding="10dp"
-                    android:text="@string/installation"
-                    android:textColor="#fff" />
-
-                <Button
-                    android:id="@+id/service_only"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toStartOf="@id/visit"
-                    android:layout_toEndOf="@id/installation"
-                    android:background="@drawable/custom_btn3"
-                    android:text="@string/service"
-                    android:textColor="#fff" />
-
-                <Button
-                    android:id="@+id/visit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="3dp"
-                    android:background="@drawable/custom_btn3"
-                    android:padding="10dp"
-                    android:text="@string/only_visit"
-                    android:textColor="#fff" />
-
-                <Button
-                    android:id="@+id/continue_log"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="3dp"
-                    android:background="@drawable/custom_btn3"
-                    android:layout_marginTop="20dp"
-                    android:padding="12dp"
-                    android:layout_below="@id/service_only"
-                    android:text="@string/continue_"
                     android:textColor="#fff" />
 
             </RelativeLayout>
@@ -614,6 +578,149 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="@string/cancel"
+                    android:textColor="#fff" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_remarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/card_view_extra_parts"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="20dp">
+
+            <TextView
+                android:id="@+id/title_remarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_textview1"
+                android:gravity="center"
+                android:text="@string/update_remarks"
+                android:textColor="#1E73F4"
+                android:textSize="20sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:gravity="center_vertical"
+                android:labelFor="@id/bill"
+                android:padding="10dp">
+
+                <EditText
+                    android:id="@+id/remarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:autofillHints="Message"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="@string/add_remarks"
+                    android:inputType="textMultiLine"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp" />
+
+                <Button
+                    android:id="@+id/update_remarks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/remarks"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/custom_btn3"
+                    android:padding="12dp"
+                    android:text="@string/update"
+                    android:textColor="#fff" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/layout_call"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/card_view_remarks"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="20dp">
+
+            <TextView
+                android:id="@+id/bill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_textview1"
+                android:gravity="center"
+                android:text="@string/complete_call_and_generate_bill"
+                android:textColor="#1E73F4"
+                android:textSize="20sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:gravity="center_vertical"
+                android:labelFor="@id/bill"
+                android:padding="10dp">
+
+                <Button
+                    android:id="@+id/installation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/custom_btn3"
+                    android:padding="10dp"
+                    android:text="@string/installation"
+                    android:textColor="#fff" />
+
+                <Button
+                    android:id="@+id/service_only"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toStartOf="@id/visit"
+                    android:layout_toEndOf="@id/installation"
+                    android:background="@drawable/custom_btn3"
+                    android:text="@string/service"
+                    android:textColor="#fff" />
+
+                <Button
+                    android:id="@+id/visit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="3dp"
+                    android:background="@drawable/custom_btn3"
+                    android:padding="10dp"
+                    android:text="@string/only_visit"
+                    android:textColor="#fff" />
+
+                <Button
+                    android:id="@+id/continue_log"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/service_only"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/custom_btn3"
+                    android:padding="12dp"
+                    android:text="@string/continue_"
                     android:textColor="#fff" />
 
             </RelativeLayout>

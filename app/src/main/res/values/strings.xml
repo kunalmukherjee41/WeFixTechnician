@@ -73,15 +73,18 @@
     <string name="purchase_date">Purchase Date</string>
     <string name="problem">Problem</string>
     <string name="close_call_logs">Close Call Logs</string>
+    <string name="open_call_logs">Open Call Logs</string>
     <string name="call_logs">Call Logs</string>
     <string name="warranty_logs">Warranty Logs</string>
     <string name="no_record">No Record</string>
-    <string name="log_placed">Log Placed</string>
+    <string name="log_placed">Log Date</string>
     <string name="log_id">Log ID#</string>
     <string name="id">ID</string>
     <string name="delete">Delete</string>
     <string name="parts_name">Parts Name</string>
     <string name="entry_date_and_time">Entry Date And Time</string>
-    <string name="loading">Loading...</string>
-    <string name="log_place">Log Place</string>
+    <string name="loading">Loading…</string>
+    <string name="update_remarks">Update Remarks</string>
+    <string name="add_remarks">Add Remarks</string>
+    <string name="update">Update</string>
 </resources>

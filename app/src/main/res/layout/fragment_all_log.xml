@@ -9,12 +9,12 @@
     android:padding="5dp"
     tools:context=".fragments.AllLogFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:id="@+id/a"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#4960E0">
@@ -33,9 +33,19 @@
 
         </RelativeLayout>
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:elevation="8dp" />
+
         <RelativeLayout
+            android:id="@+id/b"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/a">
 
             <View
                 android:layout_width="4dp"
@@ -59,9 +69,10 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
+            android:layout_below="@id/b"
+            android:layout_marginTop="10dp"
             tools:listitem="@layout/log_history" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

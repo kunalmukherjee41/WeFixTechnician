@@ -91,13 +91,22 @@ public class CallLogFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     @Override
                     public void onResponse(Call<LogResponse> call, Response<LogResponse> response) {
                         if (response.isSuccessful()) {
+                            if (logsList != null) {
+                                logsList.clear();
+                            }
                             assert response.body() != null;
                             logsList = response.body().getLog();
 //                            Toast.makeText(getActivity(), "Successful", Toast.LENGTH_LONG).show();
                             List<Logs> logs = new ArrayList<>();
+                            int i = 0;
                             for (Logs logs1 : logsList) {
                                 if (!logs1.getCallLogStatus().equals("CANCEL") && !logs1.getCallLogStatus().equals("CLOSE") && !logs1.getCallLogStatus().equals("REJECT") && !logs1.getCallLogStatus().equals("COMPLETE")) {
                                     logs.add(logs1);
+                                    i++;
+                                    if (i == 1) {
+//                                        Toast.makeText(getActivity(), logs1.getCallLogId() + "nk", Toast.LENGTH_SHORT).show();
+                                        SharedPrefManager.getInstance(getActivity()).setCallID(logs1.getCallLogId());
+                                    }
                                 }
                             }
                             recyclerView.setItemViewCacheSize(logs.size());

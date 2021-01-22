@@ -1,5 +1,6 @@
 package com.aahan.wefixtechnician.ui;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +20,12 @@ import com.aahan.wefixtechnician.Api.RetrofitClient;
 import com.aahan.wefixtechnician.R;
 import com.aahan.wefixtechnician.model.My1Response;
 import com.aahan.wefixtechnician.storage.SharedPrefManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
@@ -91,6 +99,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             assert response.body() != null;
                             String message = response.body().getMessage();
+                            updateFirebasePassword(username, txt_currentPass, txt_newPassword);
                             Toast.makeText(ChangePasswordActivity.this, message, Toast.LENGTH_SHORT).show();
                         }
                         rePassword.setText("");
@@ -151,6 +160,30 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 rePassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
         }
+    }
+
+    void updateFirebasePassword(String username, String txt_password, String txt_new_password) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        AuthCredential credential = EmailAuthProvider.getCredential(username, txt_password);
+
+        user.reauthenticate(credential)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        user.updatePassword(txt_new_password).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+//                                    Log.d(TAG, "Password updated");
+                                } else {
+//                                    Log.d(TAG, "Error password not updated")
+                                }
+                            }
+                        });
+                    } else {
+//                        Log.d(TAG, "Error auth failed")
+                    }
+                });
     }
 
 }

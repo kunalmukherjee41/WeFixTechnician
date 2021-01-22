@@ -37,6 +37,20 @@ public class SharedPrefManager {
         return sharedPreferences.getInt("ID", -1) != -1;
     }
 
+    public void setCallID(int id) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt("Call_ID", id);
+
+        editor.apply();
+    }
+
+    public int getCallID() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt("Call_ID", 0);
+    }
+
     public void saveTechnician(Technician technician) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

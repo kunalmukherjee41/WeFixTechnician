@@ -87,4 +87,11 @@
     <string name="update_remarks">Update Remarks</string>
     <string name="add_remarks">Add Remarks</string>
     <string name="update">Update</string>
+    <string name="remarks">Remarks</string>
+    <string name="close_date">Close Date</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="total_logs">Total Logs</string>
+    <string name="total_complete_pay_call_logs">Total Complete Pay Call Logs</string>
+    <string name="paid_call_logs">Paid Call Logs</string>
+    <string name="due_call_logs">Due Call Logs</string>
 </resources>

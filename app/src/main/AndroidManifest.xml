@@ -4,9 +4,10 @@
     package="com.aahan.wefixtechnician">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="false"
@@ -17,22 +18,24 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
-        </provider>
-
+        <activity
+            android:name=".ui.PaidCallLogActivity"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity
+            android:name=".ui.PaymentLogActivity"
+            android:parentActivityName=".ui.MainActivity" />
         <activity
             android:name=".ui.DisplayAllPartsActivity"
             android:parentActivityName=".ui.LogHistoryDetailsActivity" />
-        <activity android:name=".ui.MessageActivity" />
-        <activity android:name=".ui.CompleteLogActivity" />
-        <activity android:name=".ui.WarrantyLogHistoryActivity" />
+        <activity
+            android:name=".ui.MessageActivity"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity
+            android:name=".ui.CompleteLogActivity"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity
+            android:name=".ui.WarrantyLogHistoryActivity"
+            android:parentActivityName=".ui.MainActivity" />
         <activity
             android:name=".ui.ChangePasswordActivity"
             android:parentActivityName=".ui.MainActivity" />
@@ -44,7 +47,6 @@
         <activity android:name=".ui.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -59,6 +61,16 @@
                 <action android:name="com.google.android.c2dm.permission.RECEIVE" />
             </intent-filter>
         </service>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
     </application>
 
 </manifest>

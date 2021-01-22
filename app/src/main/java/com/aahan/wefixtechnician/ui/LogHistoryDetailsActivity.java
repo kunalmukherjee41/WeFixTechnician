@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -106,6 +107,7 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
         TextView amount = findViewById(R.id.amount);
         TextView problemDes = findViewById(R.id.problem_des);
         TextView status = findViewById(R.id.status);
+        TextView remarks1 = findViewById(R.id.remarks1);
 
         //notification
         title = findViewById(R.id.title);
@@ -167,6 +169,17 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
         amount.setText(String.valueOf(logs.getAmount()));
         problemDes.setText(logs.getProblem());
         status.setText(logs.getCallLogStatus());
+        if (logs.getRemarks() == null) {
+            logs.setRemarks("None");
+        }
+        remarks1.setText(logs.getRemarks());
+
+        if(logs.getCallLogStatus().equals("COMPLETE")){
+            LinearLayout layout = findViewById(R.id.close_date_layout);
+            layout.setVisibility(View.VISIBLE);
+            TextView closeDate = findViewById(R.id.close_date);
+            closeDate.setText(logs.getCloseDate());
+        }
 
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
 
@@ -232,6 +245,12 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
                     if (!serviceList.isEmpty()) {
                         for (Service s : serviceList) {
                             if (s.getTbl_services_name().equals("Installation")) {
+                                if (logs.getRefServiceId() == s.getTbl_services_id()) {
+                                    s.setTblDelearServicesCharge(logs.getAmount());
+                                    s.setTbl_services_charge(logs.getAmount());
+                                } else {
+                                    s.setTbl_services_charge((float) s.getTblDelearServicesCharge());
+                                }
                                 intent.putExtra("service", s);
                             }
                         }
@@ -250,6 +269,12 @@ public class LogHistoryDetailsActivity extends AppCompatActivity {
                     Intent intent = new Intent(LogHistoryDetailsActivity.this, CompleteLogActivity.class);
                     if (!serviceList.isEmpty()) {
                         for (Service s : serviceList) {
+                            if (logs.getRefServiceId() == s.getTbl_services_id()) {
+                                s.setTblDelearServicesCharge(logs.getAmount());
+                                s.setTbl_services_charge(logs.getAmount());
+                            } else {
+                                s.setTbl_services_charge((float) s.getTblDelearServicesCharge());
+                            }
                             if (s.getTbl_services_name().equals("Service")) {
                                 intent.putExtra("service", s);
                             }

@@ -1,9 +1,5 @@
 package com.aahan.wefixtechnician.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +13,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.aahan.wefixtechnician.Api.RetrofitClient;
 import com.aahan.wefixtechnician.R;
@@ -79,13 +79,13 @@ public class LoginActivity extends AppCompatActivity {
                         login.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_btn, null));
                         progressBar.dismiss();
                     } else {
-                        userlogin(txt_email, txt_password);
+                        technicianLogin(txt_email, txt_password);
                     }
                 }
         );
     }
 
-    private void userlogin(String txt_email, String txt_password) {
+    private void technicianLogin(String txt_email, String txt_password) {
 
         Call<TechnicianResponse> call = RetrofitClient
                 .getInstance()
@@ -112,10 +112,13 @@ public class LoginActivity extends AppCompatActivity {
 //                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //                                    startActivity(intent);
                                     firebaseLogin(txt_email, txt_password);
+                                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                    email.setText("");
                                 } else {
                                     Snackbar snackBar = Snackbar.make(findViewById(R.id.id), "You Are No Longer in this Company!", Snackbar.LENGTH_LONG);
                                     snackBar.setAction("Action Message", v -> snackBar.dismiss());
                                     snackBar.show();
+                                    progressBar.dismiss();
                                 }
                             } else {
                                 progressBar.dismiss();
@@ -151,6 +154,39 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+//    private void firebaseLogin(String txt_email, String txt_password) {
+//        FirebaseAuth auth = FirebaseAuth.getInstance();
+//        auth.createUserWithEmailAndPassword(txt_email, txt_password)
+//                .addOnCompleteListener(this, task -> {
+//                    if (task.isSuccessful()) {
+//                        FirebaseUser firebaseUser = auth.getCurrentUser();
+//                        assert firebaseUser != null;
+//                        userID = firebaseUser.getUid();
+//
+//                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userID);
+//
+//                        HashMap<String, String> hashMap = new HashMap<>();
+//                        hashMap.put("email", txt_email);
+//                        hashMap.put("id", userID);
+//                        reference.setValue(hashMap).addOnCompleteListener(task1 -> {
+//                            if (task1.isSuccessful()) {
+//                                progressBar.dismiss();
+//                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                            }
+//                        });
+//                    } else {
+//                        auth.signInWithEmailAndPassword(txt_email, txt_password)
+//                                .addOnCompleteListener(this, task12 -> {
+//                                    if (task12.isSuccessful()) {
+//                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                                        progressBar.dismiss();
+//                                    }
+//                                });
+//                        progressBar.dismiss();
+//                    }
+//                });
+//    }
+
     private void firebaseLogin(String txt_email, String txt_password) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.createUserWithEmailAndPassword(txt_email, txt_password)
@@ -168,21 +204,24 @@ public class LoginActivity extends AppCompatActivity {
                                 hashMap.put("id", userID);
                                 reference.setValue(hashMap).addOnCompleteListener(task1 -> {
                                     if (task1.isSuccessful()) {
-                                        progressBar.dismiss();
-                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
                                     }
                                 });
                             } else {
                                 auth.signInWithEmailAndPassword(txt_email, txt_password)
                                         .addOnCompleteListener(
                                                 task12 -> {
-                                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                                    progressBar.dismiss();
+                                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                    startActivity(intent);
                                                 }
                                         );
                             }
                         }
                 );
+        progressBar.dismiss();
     }
 
     public void ShowHidePass(View view) {

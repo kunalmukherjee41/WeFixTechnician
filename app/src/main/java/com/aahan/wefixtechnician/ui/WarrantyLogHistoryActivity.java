@@ -12,13 +12,13 @@ import java.util.Objects;
 
 public class WarrantyLogHistoryActivity extends AppCompatActivity {
 
-    WarrantyLog warrantyLog;
+    private WarrantyLog warrantyLog;
 
-    TextView date, name, address;
-    TextView pin, email, phone;
-    TextView model, serial, purchaseDate;
-    TextView problem, status, company;
-    TextView category;
+    private TextView date, name, address;
+    private TextView pin, email, phone;
+    private TextView model, serial, purchaseDate;
+    private TextView problem, status, company;
+    private TextView category, remarks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,7 @@ public class WarrantyLogHistoryActivity extends AppCompatActivity {
         problem = findViewById(R.id.problem);
         company = findViewById(R.id.company);
         category = findViewById(R.id.category);
+        remarks = findViewById(R.id.remarks);
 
         date.setText(warrantyLog.getCallLogDate());
         name.setText(warrantyLog.getClientName());
@@ -55,6 +56,7 @@ public class WarrantyLogHistoryActivity extends AppCompatActivity {
         problem.setText(warrantyLog.getProblem());
         company.setText(txt_company);
         category.setText(warrantyLog.getCategory());
+        remarks.setText("");
 
     }
 }

@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL = "https://wefixservice.in/android/MyApi/public/";
+    private static final String BASE_URL = "https://wefixservice.in/android1/MyApi/public/";
     private static RetrofitClient mInstance;
     private Retrofit retrofit;
 

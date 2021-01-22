@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -39,7 +38,6 @@ import com.aahan.wefixtechnician.model.Service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -62,6 +60,7 @@ public class CompleteLogActivity extends AppCompatActivity {
     private StringBuffer txtPartsDesc;
 
     private String currentDate;
+    private long currentTime;
     private String serviceName;
     private String rate_1, txt_cgst1;
 
@@ -187,7 +186,8 @@ public class CompleteLogActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         currentDate = sdf.format(new Date());
 
-        Date currentTime = Calendar.getInstance().getTime();
+//        Date currentTime = Calendar.getInstance().getTime();
+        currentTime = System.currentTimeMillis();
 
         invoiceNum = logs.getCallLogId() + "1";
         invoice.setText(invoiceNum);
@@ -268,7 +268,7 @@ public class CompleteLogActivity extends AppCompatActivity {
                                                 Call<ResponseBody> call1 = RetrofitClient
                                                         .getInstance()
                                                         .getApi()
-                                                        .completeCallLog(call_log_id, service_id, "COMPLETE", String.valueOf(totalAmount), currentDate);
+                                                        .completeCallLog(call_log_id, service_id, "COMPLETE", amount, currentDate, String.valueOf(currentTime));
 
                                                 call1.enqueue(
                                                         new Callback<ResponseBody>() {
@@ -303,7 +303,7 @@ public class CompleteLogActivity extends AppCompatActivity {
                                                 Call<ResponseBody> call1 = RetrofitClient
                                                         .getInstance()
                                                         .getApi()
-                                                        .completeCallLog(call_log_id, service_id, "COMPLETE", amount, currentDate);
+                                                        .completeCallLog(call_log_id, service_id, "COMPLETE", amount, currentDate, String.valueOf(currentTime));
 
                                                 call1.enqueue(
                                                         new Callback<ResponseBody>() {
@@ -421,7 +421,8 @@ public class CompleteLogActivity extends AppCompatActivity {
 
         canvas.drawText("TOTAL-", 560, 935, paint);
 
-        canvas.drawText(category.getTbl_category_name(), 40, 570, paint);
+        if (category.getTbl_category_name() != null)
+            canvas.drawText(category.getTbl_category_name(), 40, 570, paint);
         canvas.drawText("9954", 240, 570, paint);
         canvas.drawText(rate_1, 310, 570, paint);
         canvas.drawText(txt_cgst1, 400, 570, paint);

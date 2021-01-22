@@ -4,8 +4,10 @@ import com.aahan.wefixtechnician.model.Category1Response;
 import com.aahan.wefixtechnician.model.Company1Response;
 import com.aahan.wefixtechnician.model.LogResponse;
 import com.aahan.wefixtechnician.model.My1Response;
+import com.aahan.wefixtechnician.model.PaidLogResponse;
 import com.aahan.wefixtechnician.model.PartsResponse;
 import com.aahan.wefixtechnician.model.Service1Response;
+import com.aahan.wefixtechnician.model.SumAllLogResponse;
 import com.aahan.wefixtechnician.model.TechnicianResponse;
 import com.aahan.wefixtechnician.model.UserResponse;
 import com.aahan.wefixtechnician.model.WarrantyLogResponse;
@@ -23,6 +25,14 @@ public interface Api {
 
     @PUT("getcalllogfortechnician/{ref_technician_id}")
     Call<LogResponse> getCallLogForTechnician(@Path("ref_technician_id") int ref_technician_id);
+
+    @FormUrlEncoded
+    @PUT("getclosecalllogfortechnician/{ref_technician_id}")
+    Call<LogResponse> getCloseCallLogForTechnician(
+            @Path("ref_technician_id") int ref_technician_id,
+            @Field("start_date") String start_date,
+            @Field("end_date") String end_date
+    );
 
     @PUT("getcategorybyid/{tbl_category_id}")
     Call<Category1Response> getCategoryByID(@Path("tbl_category_id") int tbl_category_id);
@@ -68,6 +78,13 @@ public interface Api {
     );
 
     @FormUrlEncoded
+    @PUT("gettechnicianbyusername")
+    Call<TechnicianResponse> getTechnicianByEmail(
+            @Field("username") String username,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
     @PUT("updatetechnicianpassword")
     Call<My1Response> updatePassword(
             @Field("currentpassword") String currentpassword,
@@ -82,7 +99,8 @@ public interface Api {
             @Field("ref_service_id") int ref_service_id,
             @Field("call_log_status") String call_log_status,
             @Field("amount") String amount,
-            @Field("close_date") String close_date
+            @Field("close_date") String close_date,
+            @Field("close_time") String close_time
     );
 
     @FormUrlEncoded
@@ -96,4 +114,16 @@ public interface Api {
             @Field("entry_time") String time
     );
 
+    @PUT("sumallpaidlog1/{ref_technician_id}")
+    Call<SumAllLogResponse> sumAllPaidLog(@Path("ref_technician_id") int refTechnicianId);
+
+    @PUT("getpaidcalllog1/{ref_technician_id}")
+    Call<PaidLogResponse> getPaidCallLog(@Path("ref_technician_id") int ref_technician_id);
+
+    @FormUrlEncoded
+    @PUT("updatetechnicianfirebasetoken")
+    Call<My1Response> updateFirebaseToken(
+            @Field("token") String token,
+            @Field("username") String username
+    );
 }

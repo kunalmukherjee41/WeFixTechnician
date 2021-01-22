@@ -120,12 +120,16 @@ public class LogHistoryAdapter extends RecyclerView.Adapter<LogHistoryAdapter.Lo
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for (Logs item : logsListFull) {
-                    if (item.getClientName().toLowerCase().startsWith(filterPattern)) {
+                    if (item.getClientName().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                     if (String.valueOf(item.getCallLogId()).startsWith(filterPattern)) {
                         filteredList.add(item);
                     }
+                    if (item.getCloseDate() != null)
+                        if (item.getCloseDate().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
                 }
             }
             FilterResults results = new FilterResults();

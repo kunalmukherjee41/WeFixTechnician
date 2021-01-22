@@ -79,6 +79,14 @@ public class Logs implements Serializable {
     @Expose
     private String callLogStatus;
 
+    @SerializedName("close_date")
+    @Expose
+    private String closeDate;
+
+    @SerializedName("close_time")
+    @Expose
+    private String closeTime;
+
     @SerializedName("call_log_transfer_id")
     @Expose
     private int callLogTransferId;
@@ -99,7 +107,11 @@ public class Logs implements Serializable {
     @Expose
     private int refDelear;
 
-    public Logs(int callLogId, String callLogDate, int clientRefID, String callLogType, String clientName, String clientAddress, String clientPin, String clientMb, String clientEmail, int refCatId, int refServiceId, int callCompanyId, String productCompany, int amount, String paymentType, String problem, String entryTim, String callLogStatus, int callLogTransferId, String clientLogIp, String clientLogTimezone, String rejectedReason, int refDelear) {
+    @SerializedName("remarks")
+    @Expose
+    private String remarks;
+
+    public Logs(int callLogId, String callLogDate, int clientRefID, String callLogType, String clientName, String clientAddress, String clientPin, String clientMb, String clientEmail, int refCatId, int refServiceId, int callCompanyId, String productCompany, int amount, String paymentType, String problem, String entryTim, String callLogStatus, String closeDate, String closeTime, int callLogTransferId, String clientLogIp, String clientLogTimezone, String rejectedReason, int refDelear, String remarks) {
         this.callLogId = callLogId;
         this.callLogDate = callLogDate;
         this.clientRefID = clientRefID;
@@ -118,11 +130,14 @@ public class Logs implements Serializable {
         this.problem = problem;
         this.entryTim = entryTim;
         this.callLogStatus = callLogStatus;
+        this.closeDate = closeDate;
+        this.closeTime = closeTime;
         this.callLogTransferId = callLogTransferId;
         this.clientLogIp = clientLogIp;
         this.clientLogTimezone = clientLogTimezone;
         this.rejectedReason = rejectedReason;
         this.refDelear = refDelear;
+        this.remarks = remarks;
     }
 
     public int getCallLogId() {
@@ -269,6 +284,22 @@ public class Logs implements Serializable {
         this.callLogStatus = callLogStatus;
     }
 
+    public String getCloseDate() {
+        return closeDate;
+    }
+
+    public void setCloseDate(String closeDate) {
+        this.closeDate = closeDate;
+    }
+
+    public String getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(String closeTime) {
+        this.closeTime = closeTime;
+    }
+
     public int getCallLogTransferId() {
         return callLogTransferId;
     }
@@ -307,5 +338,13 @@ public class Logs implements Serializable {
 
     public void setRefDelear(int refDelear) {
         this.refDelear = refDelear;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }
